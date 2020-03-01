@@ -7,7 +7,7 @@ from selenium import webdriver
 def pytest_addoption(parser):
     """  Параметры, передаваемые в командную строку при запуске тестов """
 
-    parser.addoption('--browser_name', action='store', default=None,
+    parser.addoption('--browser_name', action='store', default="chrome",
                      help="Choose browser: chrome, firefox or safari")
     parser.addoption("--url",
                      default="http://localhost:8080/opencart/",
@@ -21,7 +21,7 @@ def url(request):
     return request.config.getoption('--url')
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def browser(request):
     """ Значение параметра --browser_name, переданного в команде pytest """
 

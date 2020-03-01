@@ -4,12 +4,12 @@
 Как запустить тесты в разных браузерах:
 
 Chrome:
-pytest -v --browser_name=chrome tests/test_opencart.py
+pytest -v --browser_name=chrome tests
 
 FireFox:
-pytest -v --browser_name=firefox tests/test_opencart.py
+pytest -v --browser_name=firefox tests
 
 Safari:
-pytest -v --browser_name=safari tests/test_opencart.py
+pytest -v --browser_name=safari tests
 
 Safari  не поддерживает режим запуска "headless"
