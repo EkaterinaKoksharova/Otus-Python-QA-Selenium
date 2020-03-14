@@ -1,4 +1,4 @@
-""" Локаторы и методы страницы логина администратора сайта opencart """
+""" Локаторы и методы страницы Products администратора магазина opencart"""
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
@@ -6,7 +6,7 @@ from pages.admin.admin_page import AdminPage
 
 
 class AdminProductsPage:
-    """ Локаторы и методы страницы логина администратора сайта opencart """
+    """ Локаторы и методы страницы Products администратора магазина opencart """
 
     copy_button = (By.CSS_SELECTOR, ".fa-copy")
     add_button = (By.CSS_SELECTOR, ".fa-plus")
