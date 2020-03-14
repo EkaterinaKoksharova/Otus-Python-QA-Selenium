@@ -1,9 +1,6 @@
 """ Тесты магазина opencart """
 
 
-from Pages.common import CommonItems
-
-
 class TestCommon:
     """ Тесты магазина opencart """
 

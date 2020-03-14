@@ -1,6 +1,6 @@
 """ Тесты для страницы администратора магазина opencart """
 
-from Pages.admin_page import AdminPage
+from pages.admin.admin_page import AdminPage
 
 
 class TestAdminPage:
@@ -11,8 +11,8 @@ class TestAdminPage:
 
         browser.get(AdminPage.adm_login_url)
 
-        browser.find_element_by_css_selector(AdminPage.name_input)
-        browser.find_element_by_css_selector(AdminPage.password_input)
-        browser.find_element_by_css_selector(AdminPage.submit_button)
-        browser.find_element_by_css_selector(AdminPage.forgotten_password_link)
-        browser.find_element_by_css_selector(AdminPage.login_panel)
+        browser.find_element(*AdminPage.name_input)
+        browser.find_element(*AdminPage.password_input)
+        browser.find_element(*AdminPage.submit_button)
+        browser.find_element(*AdminPage.forgotten_password_link)
+        browser.find_element(*AdminPage.login_panel)
