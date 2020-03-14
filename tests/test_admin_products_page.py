@@ -1,8 +1,8 @@
 """ Тесты для страницы Products администратора магазина opencart """
 
 from pages.common import CommonItems
-from pages.admin.admin_page import AdminPage
-from pages.admin.admin_products_page import AdminProductsPage
+from pages.admin_page import AdminPage
+from pages.admin_products_page import AdminProductsPage
 
 
 class TestAdminProductsPage:

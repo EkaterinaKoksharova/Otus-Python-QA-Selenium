@@ -2,7 +2,7 @@
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
-from pages.admin.admin_page import AdminPage
+from pages.admin_page import AdminPage
 
 
 class AdminProductsPage:

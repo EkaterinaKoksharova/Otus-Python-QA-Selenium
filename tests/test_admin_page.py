@@ -1,6 +1,6 @@
 """ Тесты для страницы администратора магазина opencart """
 
-from pages.admin.admin_page import AdminPage
+from pages.admin_page import AdminPage
 
 
 class TestAdminPage:
