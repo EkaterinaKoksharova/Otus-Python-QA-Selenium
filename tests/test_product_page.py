@@ -2,6 +2,7 @@
 
 
 from pages.product_page import ProductPage
+from selenium.webdriver.support import expected_conditions as ec
 
 
 class TestProductPage:
@@ -25,3 +26,5 @@ class TestProductPage:
 
         browser.find_element(*ProductPage.product_settings)
         browser.find_element(*ProductPage.add_cart_button)
+
+        assert element

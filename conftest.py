@@ -36,7 +36,7 @@ def browser(request):
     driver = None
     if browser_name == "chrome":
         options = webdriver.ChromeOptions()
-        # options.add_argument("headless")
+        options.add_argument("headless")
         options.add_argument("--window-size=1920x1080")
         driver = webdriver.Chrome(options=options)
     elif browser_name == "firefox":

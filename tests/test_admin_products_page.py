@@ -91,7 +91,8 @@ class TestAdminProductsPage:
         browser.find_element(*AdminProductsPage.filter_name_input).send_keys(self.product_name)
         browser.find_element(*AdminProductsPage.filter_button).click()
 
-        filtered_products_quantity = len(CommonItems.wait_element_present(wait, AdminProductsPage.product_lines))
+        filtered_products_quantity = \
+            len(CommonItems.wait_element_present(wait, AdminProductsPage.product_lines))
 
         assert browser.find_elements(
             *AdminProductsPage.product_line_name)[0].text == self.product_name
