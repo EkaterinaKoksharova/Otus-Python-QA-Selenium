@@ -10,8 +10,16 @@ class AdminProductsPage:
 
     copy_button = (By.CSS_SELECTOR, ".fa-copy")
     add_button = (By.CSS_SELECTOR, ".fa-plus")
-    product_form = (By.CSS_SELECTOR, "#form-product")
     delete_button = (By.CSS_SELECTOR, ".fa-trash-o")
+
+    product_form = (By.CSS_SELECTOR, "#form-product")
+    product_form_save = (By.CSS_SELECTOR, "[data-original-title='Save']")
+    product_form_cancel = (By.CSS_SELECTOR, "[data-original-title='Cancel']")
+    product_form_general = (By.ID, "tab-general")
+    product_form_data = (By.LINK_TEXT, "Data")
+    product_form_general_name = (By.ID, "input-name1")
+    product_form_general_metatag = (By.ID, "input-meta-title1")
+    product_form_data_model = (By.ID, "input-model")
 
     filter_button = (By.CSS_SELECTOR, "#button-filter")
     filter_name_input = (By.CSS_SELECTOR, "#input-name")
@@ -34,7 +42,8 @@ class AdminProductsPage:
     select_product_checkbox = (By.CSS_SELECTOR, "tbody tr:nth-child(1) [type='checkbox']")
     edit_product_button = (By.CSS_SELECTOR, "tbody tr:nth-child(1) .btn")
 
-    success_alert = (By.CSS_SELECTOR, ".alert-success")
+    success_alert = (By.CLASS_NAME, "alert-success")
+    false_alert = (By.CLASS_NAME, "alert-danger")
 
     @staticmethod
     def go_to_products_page(browser, wait):

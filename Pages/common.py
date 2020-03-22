@@ -81,3 +81,10 @@ class CommonItems:
 
         alert = browser.switch_to.alert
         alert.accept()
+
+    @staticmethod
+    def dismiss_alert(browser):
+        """ Нажимаем ОК на всплывающем окне """
+
+        alert = browser.switch_to.alert
+        alert.dismiss()
