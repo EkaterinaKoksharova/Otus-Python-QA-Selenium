@@ -22,7 +22,7 @@ class AdminPage:
     menu_products = (By.CSS_SELECTOR, '#collapse1 > :nth-child(2)')
 
     @staticmethod
-    def admin_login(browser):
+    def admin_login_right(browser):
         """ Авторизация в админской части магазина opencart """
 
         browser.get(AdminPage.adm_login_url)

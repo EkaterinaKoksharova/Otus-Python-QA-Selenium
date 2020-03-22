@@ -41,7 +41,7 @@ def browser(request):
         driver = webdriver.Chrome(options=options)
     elif browser_name == "firefox":
         options = webdriver.FirefoxOptions()
-        options.add_argument("headless")
+        options.add_argument("-headless")
         options.add_argument("--window-size=1920x1080")
         driver = webdriver.Firefox(options=options)
     elif browser_name == "safari":
