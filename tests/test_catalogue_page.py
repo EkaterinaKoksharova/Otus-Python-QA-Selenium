@@ -11,17 +11,17 @@ class TestCataloguePage:
 
         browser.get(CataloguePage.catalogue_url)
 
-        browser.find_element(*CataloguePage.menu_left)
+        assert len(browser.find_elements(*CataloguePage.menu_left)) == 1
 
-        browser.find_element(*CataloguePage.view_result_as_list)
-        browser.find_element(*CataloguePage.view_result_as_grid)
+        assert len(browser.find_elements(*CataloguePage.view_result_as_list)) == 1
+        assert len(browser.find_elements(*CataloguePage.view_result_as_grid)) == 1
 
-        browser.find_element(*CataloguePage.promo_banner)
+        assert len(browser.find_elements(*CataloguePage.promo_banner)) == 1
 
-        browser.find_element(*CataloguePage.product_card_1)
-        browser.find_element(*CataloguePage.product_card_price)
-        browser.find_element(*CataloguePage.product_card_image)
-        browser.find_element(*CataloguePage.product_card_name_link)
-        browser.find_element(*CataloguePage.product_card_add_cart)
-        browser.find_element(*CataloguePage.product_card_add_wishlist)
-        browser.find_element(*CataloguePage.product_card_compare)
+        assert len(browser.find_elements(*CataloguePage.product_card_1)) == 1
+        assert len(browser.find_elements(*CataloguePage.product_card_price)) == 1
+        assert len(browser.find_elements(*CataloguePage.product_card_image)) == 1
+        assert len(browser.find_elements(*CataloguePage.product_card_name_link)) == 1
+        assert len(browser.find_elements(*CataloguePage.product_card_add_cart)) == 1
+        assert len(browser.find_elements(*CataloguePage.product_card_add_wishlist)) == 1
+        assert len(browser.find_elements(*CataloguePage.product_card_compare)) == 1
