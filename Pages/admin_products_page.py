@@ -44,6 +44,7 @@ class AdminProductsPage:
 
     success_alert = (By.CLASS_NAME, "alert-success")
     false_alert = (By.CLASS_NAME, "alert-danger")
+    error_text = (By.CLASS_NAME, 'text-danger')
 
     @staticmethod
     def go_to_products_page(browser, wait):
@@ -53,3 +54,54 @@ class AdminProductsPage:
 
         wait.until(ec.visibility_of_element_located(AdminPage.menu_products))
         browser.find_element(*AdminPage.menu_products).click()
+
+    @staticmethod
+    def copy_product(browser):
+        """ Метод копирования 1го продукта на странице products администраторской части opencart """
+
+        browser.find_element(*AdminProductsPage.select_product_checkbox).click()
+        browser.find_element(*AdminProductsPage.copy_button).click()
+
+    @staticmethod
+    def delete_product(browser):
+        """ Метод удаления 1го продукта на странице products администраторской части opencart """
+
+        browser.find_element(*AdminProductsPage.select_product_checkbox).click()
+        browser.find_element(*AdminProductsPage.delete_button).click()
+
+    @staticmethod
+    def open_product_form_for_add(browser):
+        """ Метод открытия формы добавления нового продукта
+        на странице products администраторской части opencart """
+
+        browser.find_element(*AdminProductsPage.add_button).click()
+
+    @staticmethod
+    def open_product_form_for_edit(browser):
+        """ Метод открытия формы редактирования нового продукта
+        на странице products администраторской части opencart """
+
+        browser.find_element(*AdminProductsPage.edit_product_button).click()
+
+    @staticmethod
+    def save_product_form(browser):
+        """ Метод сохранения изменений в форме продукта
+                на странице products администраторской части opencart """
+
+        browser.find_element(*AdminProductsPage.product_form_save).click()
+
+    @staticmethod
+    def filter_products_by_name(browser, product_name):
+        """ Метод фильтрации продуктов по наименованию
+                на странице products администраторской части opencart """
+
+        browser.find_element(*AdminProductsPage.filter_name_input).send_keys(product_name)
+        browser.find_element(*AdminProductsPage.filter_button).click()
+
+    @staticmethod
+    def clear_filter(browser):
+        """ Метод очистки фильтров
+                        на странице products администраторской части opencart """
+
+        browser.find_element(*AdminProductsPage.filter_name_input).clear()
+        browser.find_element(*AdminProductsPage.filter_button).click()
