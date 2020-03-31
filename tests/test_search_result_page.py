@@ -12,18 +12,19 @@ class TestSearchResultPage:
 
         browser.get(SearchResultPage.search_result_page_url)
 
-        browser.find_element(*SearchResultPage.search_input)
+        assert len(browser.find_elements(*SearchResultPage.search_input)) > 0
 
-        browser.find_element(*SearchResultPage.category_list)
-        browser.find_element(*SearchResultPage.category_desktops)
-        browser.find_element(*SearchResultPage.category_laptops_and_notebooks)
-        browser.find_element(*SearchResultPage.category_components)
-        browser.find_element(*SearchResultPage.category_tablets)
-        browser.find_element(*SearchResultPage.category_software)
-        browser.find_element(*SearchResultPage.category_phones_and_pdas)
-        browser.find_element(*SearchResultPage.category_cameras)
-        browser.find_element(*SearchResultPage.category_mp3_players)
+        assert len(browser.find_elements(*SearchResultPage.category_list)) > 0
+        assert len(browser.find_elements(*SearchResultPage.category_desktops)) > 0
+        assert len(browser.find_elements(*SearchResultPage.category_laptops_and_notebooks)) > 0
+        assert len(browser.find_elements(*SearchResultPage.category_components)) > 0
+        assert len(browser.find_elements(*SearchResultPage.category_tablets)) > 0
+        assert len(browser.find_elements(*SearchResultPage.category_software)) > 0
+        assert len(browser.find_elements(*SearchResultPage.category_phones_and_pdas)) > 0
+        assert len(browser.find_elements(*SearchResultPage.category_cameras)) > 0
+        assert len(browser.find_elements(*SearchResultPage.category_mp3_players)) > 0
 
-        browser.find_element(*SearchResultPage.subcategories_checkbox)
-        browser.find_element(*SearchResultPage.search_in_product_descriptions_checkbox)
-        browser.find_element(*SearchResultPage.search_button)
+        assert len(browser.find_elements(*SearchResultPage.subcategories_checkbox)) > 0
+        assert len(browser.find_elements(
+            *SearchResultPage.search_in_product_descriptions_checkbox)) > 0
+        assert len(browser.find_elements(*SearchResultPage.search_button)) > 0
