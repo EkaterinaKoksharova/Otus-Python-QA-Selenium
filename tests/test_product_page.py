@@ -3,6 +3,7 @@
 
 from pages.product_page import ProductPage
 
+
 class TestProductPage:
     """ Тесты для страницы продукта магазина opencart """
 
@@ -11,16 +12,16 @@ class TestProductPage:
 
         browser.get(ProductPage.product_page_url)
 
-        browser.find_element(*ProductPage.product_image)
+        assert len(browser.find_elements(*ProductPage.product_image)) == 1
 
-        browser.find_element(*ProductPage.description_tab)
-        browser.find_element(*ProductPage.description_content)
+        assert len(browser.find_elements(*ProductPage.description_tab)) == 1
+        assert len(browser.find_elements(*ProductPage.description_content)) == 1
 
-        browser.find_element(*ProductPage.specification_tab)
-        browser.find_element(*ProductPage.specification_content)
+        assert len(browser.find_elements(*ProductPage.specification_tab)) == 1
+        assert len(browser.find_elements(*ProductPage.specification_content)) == 1
 
-        browser.find_element(*ProductPage.reviews_tab)
-        browser.find_element(*ProductPage.reviews_content)
+        assert len(browser.find_elements(*ProductPage.reviews_tab)) == 1
+        assert len(browser.find_elements(*ProductPage.reviews_content)) == 1
 
-        browser.find_element(*ProductPage.product_settings)
-        browser.find_element(*ProductPage.add_cart_button)
+        assert len(browser.find_elements(*ProductPage.product_settings)) == 1
+        assert len(browser.find_elements(*ProductPage.add_cart_button)) == 1
