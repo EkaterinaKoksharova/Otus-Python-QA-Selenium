@@ -1,13 +1,17 @@
 """ Локаторы и методы страницы каталога сайта opencart """
 
 from selenium.webdriver.common.by import By
-from pages.common import CommonItems
+from pages.base_page import BasePage
 
 
-class CataloguePage:
+class CataloguePage(BasePage):
     """ Локаторы и методы страницы каталога сайта opencart """
 
-    catalogue_url = CommonItems.base_url + "index.php?route=product/category&path=20"
+    def __init__(self, browser, common_items):
+        super().__init__(browser)
+        self.common_items = common_items
+        self.catalogue_url = self.common_items.base_url + "index.php?route=product/category&path=20"
+
     menu_left = (By.CSS_SELECTOR, ".list-group")
 
     view_result_as_list = (By.CSS_SELECTOR, "#list-view")
