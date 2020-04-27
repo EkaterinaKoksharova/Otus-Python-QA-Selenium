@@ -18,40 +18,10 @@ class AdminPage(BasePage):
     submit_button = (By.CSS_SELECTOR, 'button.btn')
     forgotten_password_link = (By.CSS_SELECTOR, '.help-block')
     error_message = (By.CSS_SELECTOR, '.alert-dismissible')
-
     logout_button = (By.CLASS_NAME, 'fa-sign-out')
-
-<<<<<<< Updated upstream
-    menu_catalogue = (By.CSS_SELECTOR, '#menu-catalog')
-=======
-    menu_catalogue = (By.LINK_TEXT, 'Catalog')
->>>>>>> Stashed changes
     menu_products = (By.CSS_SELECTOR, '#collapse1 > :nth-child(2)')
-
     alert_danger = (By.CLASS_NAME, 'alert-danger')
 
-<<<<<<< Updated upstream
-    @staticmethod
-    def go_to_admin_login_page(browser):
-        """ Метод перехода на страницу admin login администраторской части opencart """
-
-        browser.get(AdminPage.admin_login_url)
-
-    @staticmethod
-    def login_to_admin(browser, login=admin_login, password=admin_password):
-        """ Авторизация в админской части магазина opencart """
-
-        browser.find_element(*AdminPage.name_input).send_keys(login)
-        browser.find_element(*AdminPage.password_input).send_keys(password)
-
-        browser.find_element(*AdminPage.submit_button).click()
-
-    @staticmethod
-    def logout_from_admin(browser):
-        """ Выход из аккаунта в админской части магазина opencart """
-
-        browser.find_element(*AdminPage.logout_button).click()
-=======
     def go_to_admin_login_page(self):
         """ Метод перехода на страницу admin login администраторской части opencart """
 
@@ -68,4 +38,3 @@ class AdminPage(BasePage):
         """ Выход из аккаунта в админской части магазина opencart """
 
         self.browser.find_element(*self.logout_button).click()
->>>>>>> Stashed changes
