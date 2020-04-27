@@ -1,149 +1,182 @@
 """ Тесты для страницы Products администратора магазина opencart """
 
-from pages.common import CommonItems
-from pages.admin_page import AdminPage
-from pages.admin_products_page import AdminProductsPage
+from pages.page_container import PageContainer
 
 
 class TestAdminProductsPage:
     """ Тесты для страницы Products администратора магазина opencart """
 
-    product_name = 'Apple Cinema 30"'
+    product_name = 'iMac'
     product_metatag = 'testtag'
     product_model = 'testmodel'
 
     def test_admin_products_page_find_elements(self, browser, wait):
         """ Проверка наличия основных элементов на странице логина администратора"""
 
-        AdminPage.go_to_admin_login_page(browser)
+        page = PageContainer(browser)
 
-        AdminPage.login_to_admin(browser)
-        CommonItems.close_security_alert(browser)
-        AdminProductsPage.go_to_products_page(browser, wait)
+        page.admin.go_to_admin_login_page()
 
-        assert len(CommonItems.wait_element_present(wait, AdminProductsPage.add_button)) > 0
-        assert len(CommonItems.wait_element_present(wait, AdminProductsPage.copy_button)) > 0
-        assert len(CommonItems.wait_element_present(wait, AdminProductsPage.delete_button)) > 0
-        assert len(CommonItems.wait_element_present(wait, AdminProductsPage.filter_button)) > 0
-        assert len(CommonItems.wait_element_present(
-            wait, AdminProductsPage.select_all_products_checkbox)) > 0
-        assert len(CommonItems.wait_element_present(wait, AdminProductsPage.product_lines)) > 0
-        assert len(CommonItems.wait_element_present(
-            wait, AdminProductsPage.select_product_checkbox)) > 0
-        assert len(CommonItems.wait_element_present(
-            wait, AdminProductsPage.edit_product_button)) > 0
+        page.admin.login_to_admin()
+        page.common.close_security_alert()
+        page.admin_products.go_to_products_page(wait)
+
+        assert len(page.common.wait_element_present(wait, page.admin_products.add_button)) > 0
+        assert len(page.common.wait_element_present(wait, page.admin_products.copy_button)) > 0
+        assert len(page.common.wait_element_present(wait, page.admin_products.delete_button)) > 0
+        assert len(page.common.wait_element_present(wait, page.admin_products.filter_button)) > 0
+        assert len(page.common.wait_element_present(
+            wait, page.admin_products.select_all_products_checkbox)) > 0
+        assert len(page.common.wait_element_present(wait, page.admin_products.product_lines)) > 0
+        assert len(page.common.wait_element_present(
+            wait, page.admin_products.select_product_checkbox)) > 0
+        assert len(page.common.wait_element_present(
+            wait, page.admin_products.edit_product_button)) > 0
+
+    def test_add_new_product(self, browser, wait):
+        """ Проверка добавления продукта """
+
+        page = PageContainer(browser)
+
+        page.admin.go_to_admin_login_page()
+
+        page.admin.login_to_admin()
+        page.common.close_security_alert()
+        page.admin_products.go_to_products_page(wait)
+
+        page.admin_products.create_new_product(page.admin_products.product_photo_file_name,
+                                               page.admin_products.product_form_general_name,
+                                               page.admin_products.product_form_general_metatag,
+                                               page.admin_products.product_form_data_model)
+
+        assert len(page.common.wait_element_present(wait, page.admin_products.success_alert)) == 1
 
     def test_copy_product(self, browser, wait):
         """ Проверка копирования продукта """
 
-        AdminPage.go_to_admin_login_page(browser)
+        page = PageContainer(browser)
 
-        AdminPage.login_to_admin(browser)
-        CommonItems.close_security_alert(browser)
-        AdminProductsPage.go_to_products_page(browser, wait)
+        page.admin.go_to_admin_login_page()
 
-        AdminProductsPage.copy_product(browser)
+        page.admin.login_to_admin()
+        page.common.close_security_alert()
+        page.admin_products.go_to_products_page(wait)
 
-        CommonItems.wait_element_present(wait, AdminProductsPage.success_alert)
-        CommonItems.wait_element_present(wait, AdminProductsPage.product_line_name)
+        page.admin_products.copy_product()
+
+        page.common.wait_element_present(wait, page.admin_products.success_alert)
+        page.common.wait_element_present(wait, page.admin_products.product_line_name)
 
         assert browser.find_element(
-            *AdminProductsPage.product_line_name).text == self.product_name
+            *page.admin_products.product_line_name).text == self.product_name
 
     def test_delete_product_dismiss(self, browser, wait):
         """ Проверка отмены удаления продукта """
 
-        AdminPage.go_to_admin_login_page(browser)
+        page = PageContainer(browser)
 
-        AdminPage.login_to_admin(browser)
-        CommonItems.close_security_alert(browser)
-        AdminProductsPage.go_to_products_page(browser, wait)
+        page.admin.go_to_admin_login_page()
 
-        AdminProductsPage.delete_product(browser)
-        CommonItems.dismiss_alert(browser)
+        page.admin.login_to_admin()
+        page.common.close_security_alert()
+        page.admin_products.go_to_products_page(wait)
+
+        page.admin_products.delete_product()
+        page.common.dismiss_alert()
 
         assert browser.find_element(
-            *AdminProductsPage.product_line_name).text == self.product_name
+            *page.admin_products.product_line_name).text == self.product_name
 
     def test_delete_product(self, browser, wait):
         """ Проверка удаления продукта """
 
-        AdminPage.go_to_admin_login_page(browser)
+        page = PageContainer(browser)
 
-        AdminPage.login_to_admin(browser)
-        CommonItems.close_security_alert(browser)
-        AdminProductsPage.go_to_products_page(browser, wait)
+        page.admin.go_to_admin_login_page()
 
-        AdminProductsPage.delete_product(browser)
-        CommonItems.accept_alert(browser)
+        page.admin.login_to_admin()
+        page.common.close_security_alert()
+        page.admin_products.go_to_products_page(wait)
 
-        CommonItems.wait_element_present(wait, AdminProductsPage.success_alert)
+        page.admin_products.delete_product()
+        page.common.accept_alert()
+
+        page.common.wait_element_present(wait, page.admin_products.success_alert)
 
         assert browser.find_element(
-            *AdminProductsPage.product_line_name).text == self.product_name
+            *page.admin_products.product_line_name).text == self.product_name
 
     def test_open_add_new_product_form(self, browser, wait):
         """ Проверка открытия формы добавления нового продукта """
 
-        AdminPage.go_to_admin_login_page(browser)
+        page = PageContainer(browser)
 
-        AdminPage.login_to_admin(browser)
-        CommonItems.close_security_alert(browser)
-        AdminProductsPage.go_to_products_page(browser, wait)
+        page.admin.go_to_admin_login_page()
 
-        AdminProductsPage.open_product_form_for_add(browser)
+        page.admin.login_to_admin()
+        page.common.close_security_alert()
+        page.admin_products.go_to_products_page(wait)
 
-        assert len(CommonItems.wait_element_present(wait, AdminProductsPage.product_form)) > 0
+        page.admin_products.open_product_form_for_add()
+
+        assert len(page.common.wait_element_present(wait, page.admin_products.product_form)) > 0
 
     def test_open_edit_product_form(self, browser, wait):
         """ Проверка открытия формы редактирования продукта """
 
-        AdminPage.go_to_admin_login_page(browser)
+        page = PageContainer(browser)
 
-        AdminPage.login_to_admin(browser)
-        CommonItems.close_security_alert(browser)
-        AdminProductsPage.go_to_products_page(browser, wait)
+        page.admin.go_to_admin_login_page()
 
-        AdminProductsPage.open_product_form_for_edit(browser)
+        page.admin.login_to_admin()
+        page.common.close_security_alert()
+        page.admin_products.go_to_products_page(wait)
 
-        assert len(CommonItems.wait_element_present(wait, AdminProductsPage.product_form)) > 0
+        page.admin_products.open_product_form_for_edit()
+
+        assert len(page.common.wait_element_present(wait, page.admin_products.product_form)) > 0
 
     def test_find_product_by_name(self, browser, wait):
         """ Проверка фильтрации списка продуктов по наименованию продукта """
 
-        AdminPage.go_to_admin_login_page(browser)
+        page = PageContainer(browser)
 
-        AdminPage.login_to_admin(browser)
-        CommonItems.close_security_alert(browser)
-        AdminProductsPage.go_to_products_page(browser, wait)
+        page.admin.go_to_admin_login_page()
 
-        all_products_quantity = len(browser.find_elements(*AdminProductsPage.product_lines))
+        page.admin.login_to_admin()
+        page.common.close_security_alert()
+        page.admin_products.go_to_products_page(wait)
 
-        AdminProductsPage.filter_products_by_name(browser, self.product_name)
+        all_products_quantity = len(browser.find_elements(*page.admin_products.product_lines))
+
+        page.admin_products.filter_products_by_name(self.product_name)
 
         filtered_products_quantity = \
-            len(CommonItems.wait_element_present(wait, AdminProductsPage.product_lines))
+            len(page.common.wait_element_present(wait, page.admin_products.product_lines))
 
         assert browser.find_elements(
-            *AdminProductsPage.product_line_name)[0].text == self.product_name
+            *page.admin_products.product_line_name)[0].text == self.product_name
 
         assert filtered_products_quantity != all_products_quantity
 
-        AdminProductsPage.clear_filter(browser)
+        page.admin_products.clear_filter()
 
-        assert len(browser.find_elements(*AdminProductsPage.product_lines)) == all_products_quantity
+        assert len(browser.find_elements(
+            *page.admin_products.product_lines)) == all_products_quantity
 
     def test_save_new_product_without_mandatory_fields(self, browser, wait):
         """ Проверка - нельзя сохранить новый продукт без имени, тега, модели """
 
-        AdminPage.go_to_admin_login_page(browser)
+        page = PageContainer(browser)
 
-        AdminPage.login_to_admin(browser)
-        CommonItems.close_security_alert(browser)
-        AdminProductsPage.go_to_products_page(browser, wait)
+        page.admin.go_to_admin_login_page()
 
-        AdminProductsPage.open_product_form_for_add(browser)
-        AdminProductsPage.save_product_form(browser)
+        page.admin.login_to_admin()
+        page.common.close_security_alert()
+        page.admin_products.go_to_products_page(wait)
 
-        assert len(browser.find_elements(*AdminProductsPage.error_text)) == 3
-        assert len(CommonItems.wait_element_present(wait, AdminProductsPage.false_alert)) > 0
+        page.admin_products.open_product_form_for_add()
+        page.admin_products.save_product_form()
+
+        assert len(browser.find_elements(*page.admin_products.error_text)) == 3
+        assert len(page.common.wait_element_present(wait, page.admin_products.false_alert)) > 0
