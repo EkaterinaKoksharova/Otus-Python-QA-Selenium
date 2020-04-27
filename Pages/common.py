@@ -2,9 +2,10 @@
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
+from pages.base_page import BasePage
 
 
-class CommonItems:
+class CommonItems(BasePage):
     """ Переменные и методы сайта opencart """
 
     base_url = "http://localhost:8080/opencart/"
@@ -53,14 +54,12 @@ class CommonItems:
 
     close_security_alert_button = (By.CSS_SELECTOR, ".close")
 
-    @staticmethod
-    def go_to_search_result_page(browser):
+    def go_to_search_result_page(self):
         """ Метод перехода на страницу результатов поиска opencart  """
 
-        browser.find_element(*CommonItems.search_button).click()
+        self.browser.find_element(*self.search_button).click()
 
-    @staticmethod
-    def wait_element_present(wait, locator):
+    def wait_element_present(self, wait, locator):
         """ Метод ожидания появления элемента """
 
         try:
@@ -69,22 +68,19 @@ class CommonItems:
             exc.msg = 'Unable to locate element by selector ' + str(locator)
             raise
 
-    @staticmethod
-    def close_security_alert(browser):
+    def close_security_alert(self):
         """ Закрытие предупреждающего окна при загрузке страницы """
 
-        browser.find_element(*CommonItems.close_security_alert_button).click()
+        self.browser.find_element(*self.close_security_alert_button).click()
 
-    @staticmethod
-    def accept_alert(browser):
+    def accept_alert(self):
         """ Нажимаем ОК на всплывающем окне """
 
-        alert = browser.switch_to.alert
+        alert = self.browser.switch_to.alert
         alert.accept()
 
-    @staticmethod
-    def dismiss_alert(browser):
+    def dismiss_alert(self):
         """ Нажимаем ОК на всплывающем окне """
 
-        alert = browser.switch_to.alert
+        alert = self.browser.switch_to.alert
         alert.dismiss()

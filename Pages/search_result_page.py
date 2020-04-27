@@ -2,9 +2,10 @@
 
 from selenium.webdriver.common.by import By
 from pages.common import CommonItems
+from pages.base_page import BasePage
 
 
-class SearchResultPage:
+class SearchResultPage(BasePage):
     """ Локаторы и методы страницы результата поиска сайта opencart """
 
     search_result_page_url = CommonItems.base_url + "index.php?route=product/search"

@@ -1,9 +1,10 @@
 """ Локаторы и методы главной страницы сайта opencart """
 
 from selenium.webdriver.common.by import By
+from pages.base_page import BasePage
 
 
-class MainPage:
+class MainPage(BasePage):
     """ Локаторы и методы главной страницы сайта opencart """
 
     slider = (By.CSS_SELECTOR, ".swiper-viewport #slideshow0")

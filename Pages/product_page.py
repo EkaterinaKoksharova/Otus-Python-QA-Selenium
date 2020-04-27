@@ -2,13 +2,14 @@
 
 from selenium.webdriver.common.by import By
 from pages.common import CommonItems
+from pages.base_page import BasePage
 
 
-class ProductPage:
+class ProductPage(BasePage):
     """ Локаторы и методы страницы товара сайта opencart """
 
     product_page_url = CommonItems.base_url + \
-                       "index.php?route=product/product&path=20&product_id=68"
+                       "index.php?route=product/product&path=20&product_id=43"
 
     product_image = (By.CSS_SELECTOR, ".thumbnails :nth-child(1) a")
     product_image_close = (By.CSS_SELECTOR, ".mfp-close")
