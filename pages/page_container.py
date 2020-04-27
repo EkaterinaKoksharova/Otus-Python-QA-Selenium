@@ -1,12 +1,12 @@
 """ Класс с экземплярами классов всех страниц """
 
-from Pages.admin_page import AdminPage
-from Pages.admin_products_page import AdminProductsPage
-from Pages.catalogue_page import CataloguePage
-from Pages.common import CommonItems
-from Pages.main_page import MainPage
-from Pages.product_page import ProductPage
-from Pages.search_result_page import SearchResultPage
+from pages.admin_page import AdminPage
+from pages.admin_products_page import AdminProductsPage
+from pages.catalogue_page import CataloguePage
+from pages.common import CommonItems
+from pages.main_page import MainPage
+from pages.product_page import ProductPage
+from pages.search_result_page import SearchResultPage
 
 
 class PageContainer:

@@ -19,6 +19,8 @@ class AdminPage(BasePage):
     forgotten_password_link = (By.CSS_SELECTOR, '.help-block')
     error_message = (By.CSS_SELECTOR, '.alert-dismissible')
     logout_button = (By.CLASS_NAME, 'fa-sign-out')
+
+    menu_catalogue = (By.CSS_SELECTOR, '#menu-catalog')
     menu_products = (By.CSS_SELECTOR, '#collapse1 > :nth-child(2)')
     alert_danger = (By.CLASS_NAME, 'alert-danger')
 
