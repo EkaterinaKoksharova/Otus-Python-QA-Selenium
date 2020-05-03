@@ -1,8 +1,11 @@
 """  Фикстуры тестов сайта opencart """
 
 import pytest
+import logging
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.support.events import EventFiringWebDriver, AbstractEventListener
 
 
 def pytest_addoption(parser):
@@ -19,7 +22,38 @@ def pytest_addoption(parser):
     parser.addoption("--implicitly_wait",
                      default=0,
                      help="This is time parameter for driver implicitly wait")
+    parser.addoption("--log_file",
+                     default="logs/test3.log",
+                     help="This is a file adress, where selenium logs will be")
+    parser.addoption("--log_level",
+                     default="INFO",
+                     help="This is a log level parameter")
 
+
+class MyListener(AbstractEventListener):
+
+    def __init__(self, request):
+        logging.basicConfig(filename=request.config.getoption("log_file"),
+                            level=request.config.getoption("log_level"))
+
+    def after_navigate_to(self, url, driver):
+        logging.info(f'Driver navigated on {url}')
+
+    def after_find(self, by, value, driver):
+        logging.info(f'Driver found "{value}" with "{by}"')
+
+    def after_click(self, element, driver):
+        logging.info(f'Driver clicked on {element}')
+
+    def after_execute_script(self, script, driver):
+        logging.info(f'Driver executed "{script}"')
+
+    def after_quit(self, driver):
+        logging.info(f'Driver quit')
+
+    def on_exception(self, exception, driver):
+        logging.error(f'Exception: {exception}')
+        driver.get_screenshot_as_file(f'logs/{exception}.png')
 
 @pytest.fixture(scope="function")
 def url(request):
@@ -32,18 +66,23 @@ def url(request):
 def browser(request):
     """ Значение параметра --browser_name, переданного в команде pytest """
 
+    logging.info('====Browser Fixture Started====')
+
     browser_name = request.config.getoption("browser_name")
     driver = None
     if browser_name == "chrome":
         options = webdriver.ChromeOptions()
         options.add_argument("headless")
         options.add_argument("--window-size=1920x1080")
-        driver = webdriver.Chrome(options=options)
+        options.add_experimental_option('w3c', False)
+        DesiredCapabilities.CHROME['loggingPrefs'] = {'browser': 'ALL'}
+        driver = webdriver.Chrome(desired_capabilities=DesiredCapabilities.CHROME,
+                                  options=options)
     elif browser_name == "firefox":
         options = webdriver.FirefoxOptions()
         options.add_argument("-headless")
         options.add_argument("--window-size=1920x1080")
-        driver = webdriver.Firefox(options=options)
+        driver = EventFiringWebDriver(webdriver.Firefox(options=options), MyListener(request))
     elif browser_name == "safari":
         driver = webdriver.Safari()
     else:
@@ -54,6 +93,8 @@ def browser(request):
 
     yield driver
     driver.quit()
+
+    logging.info('====Browser Fixture Finished====')
 
 
 @pytest.fixture(scope="function")

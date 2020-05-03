@@ -20,6 +20,8 @@ class TestAdminPage:
         assert len(page.common.wait_element_present(wait, page.admin.forgotten_password_link)) > 0
         assert len(page.common.wait_element_present(wait, page.admin.login_panel)) > 0
 
+        assert "ERROR" not in str(browser.get_log("browser"))
+
     def test_login_to_admin_account_right(self, browser, wait):
         """ Проверка успешного входа в аккаунт администратора"""
 
@@ -29,6 +31,7 @@ class TestAdminPage:
         page.admin.login_to_admin()
 
         assert len(page.common.wait_element_present(wait, page.admin.logout_button)) > 0
+        assert "ERROR" not in str(browser.get_log("browser"))
 
     def test_login_to_admin_account_wrong(self, browser, wait):
         """ Проверка НЕуспешного входа в аккаунт администратора (неверный пароль)"""
@@ -39,6 +42,7 @@ class TestAdminPage:
         page.admin.login_to_admin(page.admin.login, self.admin_wrong_pasword)
 
         assert len(page.common.wait_element_present(wait, page.admin.alert_danger)) > 0
+        assert "ERROR" not in str(browser.get_log("browser"))
 
     def test_logout_from_admin_account(self, browser, wait):
         """ Проверка успешного выхода из аккаунта администратора"""
@@ -53,3 +57,4 @@ class TestAdminPage:
         page.admin.logout_from_admin()
 
         assert len(page.common.wait_element_present(wait, page.admin.login_panel)) > 0
+        assert "ERROR" not in str(browser.get_log("browser"))
