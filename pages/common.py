@@ -8,6 +8,9 @@ from pages.base_page import BasePage
 class CommonItems(BasePage):
     """ Переменные и методы сайта opencart """
 
+    def __init__(self, logger, browser):
+        super().__init__(logger, browser)
+
     base_url = "http://localhost:8080/opencart/"
 
     choose_currency = (By.CSS_SELECTOR, "#form-currency")
@@ -53,11 +56,6 @@ class CommonItems(BasePage):
     footer = (By.CSS_SELECTOR, "footer")
 
     close_security_alert_button = (By.CSS_SELECTOR, ".close")
-
-    def go_to_search_result_page(self):
-        """ Метод перехода на страницу результатов поиска opencart  """
-
-        self.browser.find_element(*self.search_button).click()
 
     def wait_element_present(self, wait, locator):
         """ Метод ожидания появления элемента """

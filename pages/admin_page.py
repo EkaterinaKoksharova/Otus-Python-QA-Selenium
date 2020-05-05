@@ -1,19 +1,14 @@
-# coding=utf-8
 """ Локаторы и методы страницы логина администратора сайта opencart """
 
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
-from conftest import *
-
-logger = logging.getLogger(__name__)
 
 
 class AdminPage(BasePage):
     """ Локаторы и методы страницы логина администратора сайта opencart """
 
-    def __init__(self, browser):
-        super().__init__(browser)
-        logger.info('User is on the Admin Page'.format({url}))
+    def __init__(self, logger, browser):
+        super().__init__(logger, browser)
 
     admin_login_url = "http://localhost:8080/opencart/admin/"
 
@@ -35,6 +30,7 @@ class AdminPage(BasePage):
     def go_to_admin_login_page(self):
         """ Метод перехода на страницу admin login администраторской части opencart """
 
+        self.logger.info('User is on the Admin Page')
         self.browser.get(self.admin_login_url)
 
     def login_to_admin(self, login=login, password=password):

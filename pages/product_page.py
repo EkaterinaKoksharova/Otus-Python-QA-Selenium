@@ -8,8 +8,11 @@ from pages.base_page import BasePage
 class ProductPage(BasePage):
     """ Локаторы и методы страницы товара сайта opencart """
 
+    def __init__(self, logger, browser):
+        super().__init__(logger, browser)
+
     product_page_url = CommonItems.base_url + \
-                       "index.php?route=product/product&path=20&product_id=43"
+                       "index.php?route=product/product&path=20&product_id=40"
 
     product_image = (By.CSS_SELECTOR, ".thumbnails :nth-child(1) a")
     product_image_close = (By.CSS_SELECTOR, ".mfp-close")
@@ -27,3 +30,9 @@ class ProductPage(BasePage):
 
     product_settings = (By.CSS_SELECTOR, "#content #product")
     add_cart_button = (By.CSS_SELECTOR, "#product #button-cart")
+
+    def go_to_product_page(self):
+        """ Метод открытия главной страницы сайта opencart """
+
+        self.logger.info('User is on the Product Page')
+        self.browser.get(self.product_page_url)

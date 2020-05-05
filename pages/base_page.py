@@ -4,5 +4,6 @@
 class BasePage:
     """ Класс со свойством browser """
 
-    def __init__(self, browser):
+    def __init__(self, logger, browser):
+        self.logger = logger
         self.browser = browser

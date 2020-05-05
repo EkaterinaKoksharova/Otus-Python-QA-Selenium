@@ -9,8 +9,8 @@ from pages.base_page import BasePage
 class AdminProductsPage(BasePage):
     """ Локаторы и методы страницы Products администратора магазина opencart """
 
-    def __init__(self, browser, admin_page, common_items):
-        super().__init__(browser)
+    def __init__(self, logger, browser, admin_page, common_items):
+        super().__init__(logger, browser)
         self.admin_page = admin_page
         self.common_items = common_items
 
@@ -65,6 +65,7 @@ class AdminProductsPage(BasePage):
     def go_to_products_page(self, wait):
         """ Метод перехода на страницу products администраторской части opencart """
 
+        self.logger.info('User is on the Admin Products Page')
         self.browser.find_element(*self.admin_page.menu_catalogue).click()
 
         wait.until(ec.visibility_of_element_located(self.admin_page.menu_products))

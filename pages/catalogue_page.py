@@ -7,8 +7,8 @@ from pages.base_page import BasePage
 class CataloguePage(BasePage):
     """ Локаторы и методы страницы каталога сайта opencart """
 
-    def __init__(self, browser, common_items):
-        super().__init__(browser)
+    def __init__(self, logger, browser, common_items):
+        super().__init__(logger, browser)
         self.common_items = common_items
         self.catalogue_url = self.common_items.base_url + "index.php?route=product/category&path=20"
 
@@ -35,3 +35,9 @@ class CataloguePage(BasePage):
                             "#content .row :nth-child(1) .product-thumb .fa-exchange")
     product_card_compare1 = (By.CSS_SELECTOR,
                              "#content .row :nth-child(1) .product-thumb .fa-exchange1")
+
+    def go_to_catalogue_page(self):
+        """ Метод открытия главной страницы сайта opencart """
+
+        self.logger.info('User is on the Catalogue Page')
+        self.browser.get(self.catalogue_url)

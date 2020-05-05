@@ -11,21 +11,27 @@ class TestMainPage:
         """ Проверка наличия основных элементов на главной странице"""
 
         page = PageContainer(browser)
+        page.tests_logger.info('test_main_page_find_elements')
 
-        browser.get(page.common.base_url)
-        assert len(browser.find_elements(*page.main.slider)) == 1
-        assert len(browser.find_elements(*page.main.slider_footer)) == 1
-        assert len(browser.find_elements(*page.main.featured_card_1)) == 1
-        assert len(browser.find_elements(*page.main.featured_card_2)) == 1
-        assert len(browser.find_elements(*page.main.featured_card_3)) == 1
-        assert len(browser.find_elements(*page.main.featured_card_4)) == 1
+        page.main.go_to_main_page()
+        assert browser.find_element(*page.main.slider).is_displayed()
+        assert browser.find_element(*page.main.slider_footer).is_displayed()
+        assert browser.find_element(*page.main.featured_card_1).is_displayed()
+        assert browser.find_element(*page.main.featured_card_2).is_displayed()
+        assert browser.find_element(*page.main.featured_card_3).is_displayed()
+        assert browser.find_element(*page.main.featured_card_4).is_displayed()
+
+        assert "ERROR" not in str(browser.get_log("browser"))
 
     def test_go_to_search_result(self, browser):
         """ Проверка перехода на страницу результата поиска """
 
         page = PageContainer(browser)
+        page.tests_logger.info('test_go_to_search_result')
 
         browser.get(page.common.base_url)
-        page.common.go_to_search_result_page()
+        page.search_result.go_to_search_result_page()
 
         assert browser.find_element(*page.search_result.search_input).is_displayed()
+
+        assert "ERROR" not in str(browser.get_log("browser"))

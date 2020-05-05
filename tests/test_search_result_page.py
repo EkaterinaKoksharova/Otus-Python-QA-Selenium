@@ -1,7 +1,6 @@
 """ Тесты для страницы результата поиска"""
 
 from pages.page_container import PageContainer
-from pages.search_result_page import SearchResultPage
 
 
 class TestSearchResultPage:
@@ -11,22 +10,27 @@ class TestSearchResultPage:
         """ Проверка наличия основных элементов на странице результата поиска"""
 
         page = PageContainer(browser)
+        page.tests_logger.info('test_search_result_page_find_elements')
 
-        browser.get(page.search_result.search_result_page_url)
+        page.main.go_to_main_page()
+        page.search_result.go_to_search_result_page()
 
-        assert len(browser.find_elements(*page.search_result.search_input)) > 0
+        assert browser.find_element(*page.search_result.search_input).is_displayed()
 
-        assert len(browser.find_elements(*page.search_result.category_list)) > 0
-        assert len(browser.find_elements(*page.search_result.category_desktops)) > 0
-        assert len(browser.find_elements(*page.search_result.category_laptops_and_notebooks)) > 0
-        assert len(browser.find_elements(*page.search_result.category_components)) > 0
-        assert len(browser.find_elements(*page.search_result.category_tablets)) > 0
-        assert len(browser.find_elements(*page.search_result.category_software)) > 0
-        assert len(browser.find_elements(*page.search_result.category_phones_and_pdas)) > 0
-        assert len(browser.find_elements(*page.search_result.category_cameras)) > 0
-        assert len(browser.find_elements(*page.search_result.category_mp3_players)) > 0
+        assert browser.find_element(*page.search_result.category_list).is_displayed()
+        assert browser.find_element(*page.search_result.category_desktops).is_displayed()
+        assert browser.find_element\
+            (*page.search_result.category_laptops_and_notebooks).is_displayed()
+        assert browser.find_element(*page.search_result.category_components).is_displayed()
+        assert browser.find_element(*page.search_result.category_tablets).is_displayed()
+        assert browser.find_element(*page.search_result.category_software).is_displayed()
+        assert browser.find_element(*page.search_result.category_phones_and_pdas).is_displayed()
+        assert browser.find_element(*page.search_result.category_cameras).is_displayed()
+        assert browser.find_element(*page.search_result.category_mp3_players).is_displayed()
 
-        assert len(browser.find_elements(*page.search_result.subcategories_checkbox)) > 0
-        assert len(browser.find_elements(
-            *page.search_result.search_in_product_descriptions_checkbox)) > 0
-        assert len(browser.find_elements(*page.search_result.search_button)) > 0
+        assert browser.find_element(*page.search_result.subcategories_checkbox).is_displayed()
+        assert browser.find_element\
+            (*page.search_result.search_in_product_descriptions_checkbox).is_displayed()
+        assert browser.find_element(*page.search_result.search_button).is_displayed()
+
+        assert "ERROR" not in str(browser.get_log("browser"))

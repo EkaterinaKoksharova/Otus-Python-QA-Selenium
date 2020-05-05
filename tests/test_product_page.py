@@ -11,19 +11,18 @@ class TestProductPage:
         """ Проверка наличия основных элементов на странице продукта"""
 
         page = PageContainer(browser)
+        page.tests_logger.info('test_product_page_find_elements')
 
-        browser.get(page.product.product_page_url)
+        page.product.go_to_product_page()
 
-        assert len(browser.find_elements(*page.product.product_image)) == 1
+        assert browser.find_element(*page.product.product_image).is_displayed()
 
-        assert len(browser.find_elements(*page.product.description_tab)) == 1
-        assert len(browser.find_elements(*page.product.description_content)) == 1
+        assert browser.find_element(*page.product.description_tab).is_displayed()
+        assert browser.find_element(*page.product.description_content).is_displayed()
 
-        assert len(browser.find_elements(*page.product.specification_tab)) == 1
-        assert len(browser.find_elements(*page.product.specification_content)) == 1
+        assert browser.find_element(*page.product.specification_tab).is_displayed()
 
-        assert len(browser.find_elements(*page.product.reviews_tab)) == 1
-        assert len(browser.find_elements(*page.product.reviews_content)) == 1
+        assert browser.find_element(*page.product.product_settings).is_displayed()
+        assert browser.find_element(*page.product.add_cart_button).is_displayed()
 
-        assert len(browser.find_elements(*page.product.product_settings)) == 1
-        assert len(browser.find_elements(*page.product.add_cart_button)) == 1
+        assert "ERROR" not in str(browser.get_log("browser"))

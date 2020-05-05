@@ -1,7 +1,7 @@
 """  Фикстуры тестов сайта opencart """
 
-import pytest
 import logging
+import pytest
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -23,7 +23,7 @@ def pytest_addoption(parser):
                      default=0,
                      help="This is time parameter for driver implicitly wait")
     parser.addoption("--log_file",
-                     default="logs/test3.log",
+                     default=None,
                      help="This is a file adress, where selenium logs will be")
     parser.addoption("--log_level",
                      default="INFO",
@@ -31,29 +31,31 @@ def pytest_addoption(parser):
 
 
 class MyListener(AbstractEventListener):
+    """ Класс с методами логирования действия драйвера """
 
     def __init__(self, request):
         logging.basicConfig(filename=request.config.getoption("log_file"),
                             level=request.config.getoption("log_level"))
 
     def after_navigate_to(self, url, driver):
-        logging.info(f'Driver navigated on {url}')
+        logging.info('Driver navigated on %s', url)
 
     def after_find(self, by, value, driver):
-        logging.info(f'Driver found "{value}" with "{by}"')
+        logging.info('Driver found %s with %s', value, by)
 
     def after_click(self, element, driver):
-        logging.info(f'Driver clicked on {element}')
+        logging.info('Driver clicked on %s', element)
 
     def after_execute_script(self, script, driver):
-        logging.info(f'Driver executed "{script}"')
+        logging.info('Driver executed %s', script)
 
     def after_quit(self, driver):
-        logging.info(f'Driver quit')
+        logging.info('Driver quit')
 
     def on_exception(self, exception, driver):
-        logging.error(f'Exception: {exception}')
+        logging.error('Exception: %s', exception)
         driver.get_screenshot_as_file(f'logs/{exception}.png')
+
 
 @pytest.fixture(scope="function")
 def url(request):
@@ -75,9 +77,10 @@ def browser(request):
         options.add_argument("headless")
         options.add_argument("--window-size=1920x1080")
         options.add_experimental_option('w3c', False)
-        DesiredCapabilities.CHROME['loggingPrefs'] = {'browser': 'ALL'}
-        driver = webdriver.Chrome(desired_capabilities=DesiredCapabilities.CHROME,
-                                  options=options)
+        DesiredCapabilities.CHROME['loggingPrefs'] = {'browser': 'ALL', 'driver': 'ALL'}
+        driver = EventFiringWebDriver(webdriver.Chrome(desired_capabilities=DesiredCapabilities.CHROME,
+                                                       options=options),
+                                      MyListener(request))
     elif browser_name == "firefox":
         options = webdriver.FirefoxOptions()
         options.add_argument("-headless")
