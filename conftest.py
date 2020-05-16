@@ -11,8 +11,8 @@ from selenium.webdriver.support.events import EventFiringWebDriver, AbstractEven
 def pytest_addoption(parser):
     """  Параметры, передаваемые в командную строку при запуске тестов """
 
-    parser.addoption('--browser_name', action='store', default="chrome",
-                     help="Choose browser: chrome, firefox or safari")
+    parser.addoption('--browser_name', action='store', default=None,
+                     help="Choose browser: chrome, firefox, safari or remote")
     parser.addoption("--url",
                      default="http://localhost:8080/opencart/",
                      help="This is request url")
@@ -28,6 +28,11 @@ def pytest_addoption(parser):
     parser.addoption("--log_level",
                      default="INFO",
                      help="This is a log level parameter")
+    parser.addoption("--remote_browser", action="store", default="chrome",
+                     choices=["chrome", "firefox", "opera", "yandex"],
+                     help="This is a remote browser type")
+    parser.addoption("--remote_executor", action="store", default="10.0.1.4",
+                     help="This is ip for browser.Remote executor")
 
 
 class MyListener(AbstractEventListener):
@@ -58,19 +63,13 @@ class MyListener(AbstractEventListener):
 
 
 @pytest.fixture(scope="function")
-def url(request):
-    """ Значение параметра --url, переданного в команде pytest """
-
-    return request.config.getoption('--url')
-
-
-@pytest.fixture(scope="function")
 def browser(request):
     """ Значение параметра --browser_name, переданного в команде pytest """
 
     logging.info('====Browser Fixture Started====')
 
-    browser_name = request.config.getoption("browser_name")
+    browser_name = request.config.getoption("--browser_name")
+    remote_browser = request.config.getoption("--remote_browser")
     driver = None
     if browser_name == "chrome":
         options = webdriver.ChromeOptions()
@@ -88,8 +87,25 @@ def browser(request):
         driver = EventFiringWebDriver(webdriver.Firefox(options=options), MyListener(request))
     elif browser_name == "safari":
         driver = webdriver.Safari()
+    elif browser_name == "remote_standalone":
+        executor = request.config.getoption("--remote_executor")
+        driver = webdriver.Remote(command_executor=f"http://{executor}:4444/wd/hub",
+                                  desired_capabilities={"browserName": remote_browser})
+    elif browser_name == "remote_browserstack":
+        desired_cap = {
+            'browser': 'Chrome',
+            'browser_version': '50.0',
+            'os': 'Windows',
+            'os_version': '10',
+            'resolution': '1024x768',
+            'name': 'Opencart Otus QA',
+            'browserstack.local': 'true'
+        }
+        driver = webdriver.Remote(
+            command_executor='https://bsuser63897:sEzEdkTCAsz4ZLuakvgk@hub-cloud.browserstack.com/wd/hub',
+            desired_capabilities=desired_cap)
     else:
-        raise pytest.UsageError("--browser_name should be chrome, firefox or safari")
+        raise pytest.UsageError("--browser_name should be chrome, firefox, safari or remote")
 
     implicitly_wait_parameter = request.config.getoption('--implicitly_wait')
     driver.implicitly_wait(implicitly_wait_parameter)
@@ -106,3 +122,10 @@ def wait(browser, request):
 
     wait_parameter = request.config.getoption('--wait')
     return WebDriverWait(browser, wait_parameter)
+
+
+@pytest.fixture(scope="function")
+def url(request):
+    """ Значение параметра --url, переданного в команде pytest """
+
+    return request.config.getoption('--url')
