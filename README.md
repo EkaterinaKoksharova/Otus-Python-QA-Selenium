@@ -29,7 +29,7 @@ pytest -v ---log_level=INFO, где "INFO" - тип логов, которые �
 - Убедиться, что в тестах верный url - http://localhost:8080/opencart/
 - В терминале основной машины выполняем команду:
 java -jar selenium selenium-server-standalone-3.141.59.jar
-- В терминале PyCharm выполняем команду (в столбик для читаемости):
+- В терминале PyCharm выполняем команду:
 pytest --browser_name=remote --remote_browser=chrome --remote_executor=ip_основной_машины 
 test_opencart.py
 
@@ -47,3 +47,12 @@ java -jar selenium selenium-server-standalone-3.141.59.jar -role node
 - В терминале PyCharm выполняем команду:
 pytest --browser_name=remote --remote_browser=chrome --remote_executor=ip_основной_машины 
 test_opencart.py
+
+Запуск тестов с Selenoid:
+- Настройка сети виртуалки - NAT
+- Убедиться, что в тестах верный url - http://10.0.2.15/opencart/
+- В терминале PyCharm выполняем команду:
+pytest --browser_name=remote_selenoid --executor=localhost test_admin_page.py
+
+Браузер меняем в конфигах conftest фикстуры browser.
+

@@ -12,7 +12,8 @@ def pytest_addoption(parser):
     """  Параметры, передаваемые в командную строку при запуске тестов """
 
     parser.addoption('--browser_name', action='store', default=None,
-                     help="Choose browser: chrome, firefox, safari or remote")
+                     help="Choose browser: chrome, firefox, safari or remote, "
+                          "remote_standalone, remote_browserstack or remote selenoid")
     parser.addoption("--url",
                      default="http://localhost:8080/opencart/",
                      help="This is request url")
@@ -31,7 +32,7 @@ def pytest_addoption(parser):
     parser.addoption("--remote_browser", action="store", default="chrome",
                      choices=["chrome", "firefox", "opera", "yandex"],
                      help="This is a remote browser type")
-    parser.addoption("--remote_executor", action="store", default="10.0.1.4",
+    parser.addoption("--executor", action="store", default="10.0.2.15",
                      help="This is ip for browser.Remote executor")
 
 
@@ -70,6 +71,7 @@ def browser(request):
 
     browser_name = request.config.getoption("--browser_name")
     remote_browser = request.config.getoption("--remote_browser")
+    executor = request.config.getoption("--executor")
     driver = None
     if browser_name == "chrome":
         options = webdriver.ChromeOptions()
@@ -88,7 +90,6 @@ def browser(request):
     elif browser_name == "safari":
         driver = webdriver.Safari()
     elif browser_name == "remote_standalone":
-        executor = request.config.getoption("--remote_executor")
         driver = webdriver.Remote(command_executor=f"http://{executor}:4444/wd/hub",
                                   desired_capabilities={"browserName": remote_browser})
     elif browser_name == "remote_browserstack":
@@ -104,8 +105,19 @@ def browser(request):
         driver = webdriver.Remote(
             command_executor='https://bsuser63897:sEzEdkTCAsz4ZLuakvgk@hub-cloud.browserstack.com/wd/hub',
             desired_capabilities=desired_cap)
+    elif browser_name == "remote_selenoid":
+        capabilities = {
+            'browserName': 'chrome',
+            'version': '70.0',
+            'enableVNC': True,
+            'enableVideo': False,
+            'enableLog': False}
+        driver = webdriver.Remote(command_executor=f"http://{executor}:4444/wd/hub",
+                                  desired_capabilities=capabilities)
     else:
-        raise pytest.UsageError("--browser_name should be chrome, firefox, safari or remote")
+        raise pytest.UsageError("--browser_name should be chrome, "
+                                "firefox, safari, remote_standalone, "
+                                "remote_browserstack or remote selenoid")
 
     implicitly_wait_parameter = request.config.getoption('--implicitly_wait')
     driver.implicitly_wait(implicitly_wait_parameter)
