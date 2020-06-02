@@ -1,6 +1,7 @@
 """ Локаторы и методы страницы Products администратора магазина opencart"""
 
 import os
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from pages.base_page import BasePage
@@ -65,82 +66,91 @@ class AdminProductsPage(BasePage):
     def go_to_products_page(self, wait):
         """ Метод перехода на страницу products администраторской части opencart """
 
-        self.logger.info('User is on the Admin Products Page')
-        self.browser.find_element(*self.admin_page.menu_catalogue).click()
+        with allure.step("Переход на страницу admin products"):
+            self.logger.info('User is on the Admin Products Page')
+            self.browser.find_element(*self.admin_page.menu_catalogue).click()
 
-        wait.until(ec.visibility_of_element_located(self.admin_page.menu_products))
-        self.browser.find_element(*self.admin_page.menu_products).click()
+            wait.until(ec.visibility_of_element_located(self.admin_page.menu_products))
+            self.browser.find_element(*self.admin_page.menu_products).click()
 
     def copy_product(self):
         """ Метод копирования 1го продукта на странице products администраторской части opencart """
 
-        self.browser.find_element(*self.select_product_checkbox).click()
-        self.browser.find_element(*self.copy_button).click()
+        with allure.step("Копирование 1го продукта из списка"):
+            self.browser.find_element(*self.select_product_checkbox).click()
+            self.browser.find_element(*self.copy_button).click()
 
     def delete_product(self):
         """ Метод удаления 1го продукта на странице products администраторской части opencart """
 
-        self.browser.find_element(*self.select_product_checkbox).click()
-        self.browser.find_element(*self.delete_button).click()
+        with allure.step("Удаление 1го продукта из списка"):
+            self.browser.find_element(*self.select_product_checkbox).click()
+            self.browser.find_element(*self.delete_button).click()
 
     def open_product_form_for_add(self):
         """ Метод открытия формы добавления нового продукта
         на странице products администраторской части opencart """
 
-        self.browser.find_element(*self.add_button).click()
+        with allure.step("Открытие формы добавления нового продукта"):
+            self.browser.find_element(*self.add_button).click()
 
     def open_product_form_for_edit(self):
         """ Метод открытия формы редактирования нового продукта
         на странице products администраторской части opencart """
 
-        self.browser.find_element(*self.edit_product_button).click()
+        with allure.step("Открытие формы редактирования продукта"):
+            self.browser.find_element(*self.edit_product_button).click()
 
     def save_product_form(self):
         """ Метод сохранения изменений в форме продукта
                 на странице products администраторской части opencart """
 
-        self.browser.find_element(*self.product_form_save).click()
+        with allure.step("Сохранение изменений в форме продукта"):
+            self.browser.find_element(*self.product_form_save).click()
 
     def filter_products_by_name(self, product_name):
         """ Метод фильтрации продуктов по наименованию
                 на странице products администраторской части opencart """
 
-        self.browser.find_element(*self.filter_name_input).send_keys(product_name)
-        self.browser.find_element(*self.filter_button).click()
+        with allure.step("Фильтрация продуктов по наименованию"):
+            self.browser.find_element(*self.filter_name_input).send_keys(product_name)
+            self.browser.find_element(*self.filter_button).click()
 
     def clear_filter(self):
         """ Метод очистки фильтров
                         на странице products администраторской части opencart """
 
-        self.browser.find_element(*self.filter_name_input).clear()
-        self.browser.find_element(*self.filter_button).click()
+        with allure.step("Очистка фильтров"):
+            self.browser.find_element(*self.filter_name_input).clear()
+            self.browser.find_element(*self.filter_button).click()
 
     def create_new_product(self, photo_name, product_name, meta_tag_name, model_name):
         """ Создание нового продукта """
 
-        self.open_product_form_for_add()
-        self.browser.find_element(*self.product_form_general_name).send_keys(product_name)
-        self.browser.find_element(*self.product_form_general_metatag).send_keys(meta_tag_name)
-        self.browser.find_element(*self.product_form_data).click()
-        self.browser.find_element(*self.product_form_data_model).send_keys(model_name)
+        with allure.step("Создание нового продукта"):
+            self.open_product_form_for_add()
+            self.browser.find_element(*self.product_form_general_name).send_keys(product_name)
+            self.browser.find_element(*self.product_form_general_metatag).send_keys(meta_tag_name)
+            self.browser.find_element(*self.product_form_data).click()
+            self.browser.find_element(*self.product_form_data_model).send_keys(model_name)
 
-        self.browser.find_element(*self.product_form_image).click()
-        self.browser.find_element(*self.product_form_image_add_image).click()
+            self.browser.find_element(*self.product_form_image).click()
+            self.browser.find_element(*self.product_form_image_add_image).click()
 
-        self.browser.find_element(*self.product_form_image_select_image).click()
+            self.browser.find_element(*self.product_form_image_select_image).click()
 
-        #Клик по кнопке загрузки
-        self.browser.execute_script("$('#button-upload').click();")
+            #Клик по кнопке загрузки
+            self.browser.execute_script("$('#button-upload').click();")
 
-        #Показ формы загрузки фото на странице, ввод наименования файла фото
-        self.browser.execute_script("$('#form-upload').show();")
-        self.browser.execute_script("$('#form-upload > input').show();")
+            #Показ формы загрузки фото на странице, ввод наименования файла фото
+            self.browser.execute_script("$('#form-upload').show();")
+            self.browser.execute_script("$('#form-upload > input').show();")
 
-        self.browser.find_element_by_css_selector("#form-upload > input").send_keys(photo_name)
+            self.browser.find_element_by_css_selector("#form-upload > input").send_keys(photo_name)
 
-        self.common_items.accept_alert()
+            self.common_items.accept_alert()
 
-        self.browser.find_element(*self.product_form_image_refresh).click()
-        self.browser.find_element_by_css_selector("[title='test_product_p hoto.jpg']").click()
+            self.browser.find_element(*self.product_form_image_refresh).click()
+            self.browser.find_element_by_css_selector("[title='test_product_p hoto.jpg']").click()
 
-        self.save_product_form()
+            self.save_product_form()

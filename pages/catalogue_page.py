@@ -1,5 +1,6 @@
 """ Локаторы и методы страницы каталога сайта opencart """
 
+import allure
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
@@ -39,5 +40,6 @@ class CataloguePage(BasePage):
     def go_to_catalogue_page(self):
         """ Метод открытия главной страницы сайта opencart """
 
-        self.logger.info('User is on the Catalogue Page')
-        self.browser.get(self.catalogue_url)
+        with allure.step("Переход на страницу catalogue"):
+            self.logger.info('User is on the Catalogue Page')
+            self.browser.get(self.catalogue_url)

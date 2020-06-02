@@ -1,5 +1,6 @@
 """ Тесты для страницы Products администратора магазина opencart """
 
+import allure
 import pytest
 from pages.page_container import PageContainer
 
@@ -7,10 +8,13 @@ from pages.page_container import PageContainer
 class TestAdminProductsPage:
     """ Тесты для страницы Products администратора магазина opencart """
 
+    page = PageContainer(browser=None)
     product_name = 'iMac'
     product_metatag = 'testtag'
     product_model = 'testmodel'
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title("Проверка наличия основных элементов на странице логина администратора")
     def test_admin_products_page_find_elements(self, browser, wait):
         """ Проверка наличия основных элементов на странице логина администратора"""
 
@@ -54,8 +58,10 @@ class TestAdminProductsPage:
                                                page.admin_products.product_form_data_model)
 
         assert len(page.common.wait_element_present(wait, page.admin_products.success_alert)) == 1
-        assert "ERROR" not in str (browser.get_log ("browser"))
+        assert "ERROR" not in str(browser.get_log("browser"))
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title(" Проверка копирования продукта ")
     def test_copy_product(self, browser, wait):
         """ Проверка копирования продукта """
 
@@ -75,8 +81,10 @@ class TestAdminProductsPage:
 
         assert browser.find_element(
             *page.admin_products.product_line_name).text == self.product_name
-        assert "ERROR" not in str (browser.get_log ("browser"))
+        assert "ERROR" not in str(browser.get_log("browser"))
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title(" Проверка отмены удаления продукта ")
     def test_delete_product_dismiss(self, browser, wait):
         """ Проверка отмены удаления продукта """
 
@@ -94,8 +102,10 @@ class TestAdminProductsPage:
 
         assert browser.find_element(
             *page.admin_products.product_line_name).text == self.product_name
-        assert "ERROR" not in str (browser.get_log ("browser"))
+        assert "ERROR" not in str(browser.get_log("browser"))
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title(" Проверка удаления продукта ")
     def test_delete_product(self, browser, wait):
         """ Проверка удаления продукта """
 
@@ -115,8 +125,10 @@ class TestAdminProductsPage:
 
         assert browser.find_element(
             *page.admin_products.product_line_name).text == self.product_name
-        assert "ERROR" not in str (browser.get_log ("browser"))
+        assert "ERROR" not in str(browser.get_log("browser"))
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title(" Проверка открытия формы добавления нового продукта ")
     def test_open_add_new_product_form(self, browser, wait):
         """ Проверка открытия формы добавления нового продукта """
 
@@ -132,8 +144,10 @@ class TestAdminProductsPage:
         page.admin_products.open_product_form_for_add()
 
         assert len(page.common.wait_element_present(wait, page.admin_products.product_form)) > 0
-        assert "ERROR" not in str (browser.get_log ("browser"))
+        assert "ERROR" not in str(browser.get_log("browser"))
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title(" Проверка открытия формы редактирования продукта ")
     def test_open_edit_product_form(self, browser, wait):
         """ Проверка открытия формы редактирования продукта """
 
@@ -149,8 +163,10 @@ class TestAdminProductsPage:
         page.admin_products.open_product_form_for_edit()
 
         assert len(page.common.wait_element_present(wait, page.admin_products.product_form)) > 0
-        assert "ERROR" not in str (browser.get_log ("browser"))
+        assert "ERROR" not in str(browser.get_log("browser"))
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title(" Проверка фильтрации списка продуктов по наименованию продукта ")
     def test_find_product_by_name(self, browser, wait):
         """ Проверка фильтрации списка продуктов по наименованию продукта """
 
@@ -179,8 +195,10 @@ class TestAdminProductsPage:
 
         assert len(browser.find_elements(
             *page.admin_products.product_lines)) == all_products_quantity
-        assert "ERROR" not in str (browser.get_log ("browser"))
+        assert "ERROR" not in str(browser.get_log("browser"))
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title(" Проверка - нельзя сохранить новый продукт без имени, тега, модели ")
     def test_save_new_product_without_mandatory_fields(self, browser, wait):
         """ Проверка - нельзя сохранить новый продукт без имени, тега, модели """
 
@@ -198,4 +216,4 @@ class TestAdminProductsPage:
 
         assert len(browser.find_elements(*page.admin_products.error_text)) == 3
         assert len(page.common.wait_element_present(wait, page.admin_products.false_alert)) > 0
-        assert "ERROR" not in str (browser.get_log ("browser"))
+        assert "ERROR" not in str(browser.get_log("browser"))

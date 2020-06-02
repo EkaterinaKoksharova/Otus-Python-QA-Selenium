@@ -1,5 +1,6 @@
 """ Локаторы и методы страницы логина администратора сайта opencart """
 
+import allure
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
@@ -30,17 +31,20 @@ class AdminPage(BasePage):
     def go_to_admin_login_page(self):
         """ Метод перехода на страницу admin login администраторской части opencart """
 
-        self.logger.info('User is on the Admin Page')
-        self.browser.get(self.admin_login_url)
+        with allure.step("Переход на страницу admin login"):
+            self.logger.info('User is on the Admin Page')
+            self.browser.get(self.admin_login_url)
 
     def login_to_admin(self, login=login, password=password):
         """ Авторизация в админской части магазина opencart """
 
-        self.browser.find_element(*self.name_input).send_keys(login)
-        self.browser.find_element(*self.password_input).send_keys(password)
-        self.browser.find_element(*self.submit_button).click()
+        with allure.step("Авторизация в админской части магазина opencart"):
+            self.browser.find_element(*self.name_input).send_keys(login)
+            self.browser.find_element(*self.password_input).send_keys(password)
+            self.browser.find_element(*self.submit_button).click()
 
     def logout_from_admin(self):
         """ Выход из аккаунта в админской части магазина opencart """
 
-        self.browser.find_element(*self.logout_button).click()
+        with allure.step("Выход из аккаунта в админской части магазина opencart"):
+            self.browser.find_element(*self.logout_button).click()

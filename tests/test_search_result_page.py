@@ -1,11 +1,16 @@
 """ Тесты для страницы результата поиска"""
 
+import allure
 from pages.page_container import PageContainer
 
 
 class TestSearchResultPage:
     """ Тесты для страницы результата поиска"""
 
+    page = PageContainer(browser=None)
+
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title("Проверка наличия основных элементов на странице результата поиска")
     def test_search_result_page_find_elements(self, browser):
         """ Проверка наличия основных элементов на странице результата поиска"""
 

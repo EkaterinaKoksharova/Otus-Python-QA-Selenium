@@ -11,7 +11,7 @@ from selenium.webdriver.support.events import EventFiringWebDriver, AbstractEven
 def pytest_addoption(parser):
     """  Параметры, передаваемые в командную строку при запуске тестов """
 
-    parser.addoption('--browser_name', action='store', default=None,
+    parser.addoption('--browser_name', action='store', default='chrome',
                      help="Choose browser: chrome, firefox, safari or remote, "
                           "remote_standalone, remote_browserstack or remote selenoid")
     parser.addoption("--url",
@@ -79,9 +79,10 @@ def browser(request):
         options.add_argument("--window-size=1920x1080")
         options.add_experimental_option('w3c', False)
         DesiredCapabilities.CHROME['loggingPrefs'] = {'browser': 'ALL', 'driver': 'ALL'}
-        driver = EventFiringWebDriver(webdriver.Chrome(desired_capabilities=DesiredCapabilities.CHROME,
-                                                       options=options),
-                                      MyListener(request))
+        driver = EventFiringWebDriver\
+            (webdriver.Chrome(desired_capabilities=DesiredCapabilities.CHROME,
+                              options=options),
+             MyListener(request))
     elif browser_name == "firefox":
         options = webdriver.FirefoxOptions()
         options.add_argument("-headless")

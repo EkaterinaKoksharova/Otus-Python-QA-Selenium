@@ -1,5 +1,6 @@
 """ Локаторы и методы главной страницы сайта opencart """
 
+import allure
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
@@ -22,5 +23,6 @@ class MainPage(BasePage):
     def go_to_main_page(self):
         """ Метод открытия главной страницы сайта opencart """
 
-        self.logger.info('User is on the Main Page')
-        self.browser.get(self.common_items.base_url)
+        with allure.step("Переход на страницу main"):
+            self.logger.info('User is on the Main Page')
+            self.browser.get(self.common_items.base_url)

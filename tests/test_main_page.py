@@ -1,14 +1,18 @@
 """ Тесты для главной страницы магазина opencart """
 
-
+import allure
 from pages.page_container import PageContainer
 
 
 class TestMainPage:
     """ Тесты для главной страницы магазина opencart """
 
+    page = PageContainer(browser=None)
+
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title("Проверка наличия основных элементов на главной странице")
     def test_main_page_find_elements(self, browser):
-        """ Проверка наличия основных элементов на главной странице"""
+        """ Проверка наличия основных элементов на главной странице """
 
         page = PageContainer(browser)
         page.tests_logger.info('test_main_page_find_elements')
@@ -23,6 +27,8 @@ class TestMainPage:
 
         assert "ERROR" not in str(browser.get_log("browser"))
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title("Проверка перехода на страницу результата поиска")
     def test_go_to_search_result(self, browser):
         """ Проверка перехода на страницу результата поиска """
 

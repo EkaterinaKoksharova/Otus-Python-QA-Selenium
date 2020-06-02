@@ -1,12 +1,16 @@
 """ Тесты для страницы продукта магазина opencart """
 
-
+import allure
 from pages.page_container import PageContainer
 
 
 class TestProductPage:
     """ Тесты для страницы продукта магазина opencart """
 
+    page = PageContainer(browser=None)
+
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title("Проверка наличия основных элементов на странице продукта")
     def test_product_page_find_elements(self, browser):
         """ Проверка наличия основных элементов на странице продукта"""
 

@@ -1,11 +1,16 @@
 """ Тесты для страницы каталога магазина opencart """
 
+import allure
 from pages.page_container import PageContainer
 
 
 class TestCataloguePage:
     """ Тесты для страницы каталога магазина opencart """
 
+    page = PageContainer(browser=None)
+
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title(" Проверка наличия элементов на странице каталога ")
     def test_catalogue_page_find_elements(self, browser):
         """ Проверка наличия элементов на странице каталога"""
 
@@ -29,4 +34,4 @@ class TestCataloguePage:
         assert browser.find_element(*page.catalogue.product_card_add_wishlist).is_displayed()
         assert browser.find_element(*page.catalogue.product_card_compare).is_displayed()
 
-        assert "ERROR" not in str (browser.get_log ("browser"))
+        assert "ERROR" not in str(browser.get_log("browser"))

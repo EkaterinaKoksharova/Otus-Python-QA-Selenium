@@ -1,5 +1,6 @@
 """ Локаторы и методы страницы результата поиска сайта opencart """
 
+import allure
 from selenium.webdriver.common.by import By
 from pages.common import CommonItems
 from pages.base_page import BasePage
@@ -41,5 +42,6 @@ class SearchResultPage(BasePage):
     def go_to_search_result_page(self):
         """ Метод перехода на страницу результатов поиска opencart """
 
-        self.logger.info('User is on the Search Result page')
-        self.browser.find_element(*self.common_items.search_button).click()
+        with allure.step("Переход на страницу search result"):
+            self.logger.info('User is on the Search Result page')
+            self.browser.find_element(*self.common_items.search_button).click()

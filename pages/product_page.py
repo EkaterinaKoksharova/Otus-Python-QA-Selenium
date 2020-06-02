@@ -1,5 +1,6 @@
 """ Локаторы и методы страницы товара сайта opencart """
 
+import allure
 from selenium.webdriver.common.by import By
 from pages.common import CommonItems
 from pages.base_page import BasePage
@@ -34,5 +35,6 @@ class ProductPage(BasePage):
     def go_to_product_page(self):
         """ Метод открытия главной страницы сайта opencart """
 
-        self.logger.info('User is on the Product Page')
-        self.browser.get(self.product_page_url)
+        with allure.step("Переход на страницу product"):
+            self.logger.info('User is on the Product Page')
+            self.browser.get(self.product_page_url)

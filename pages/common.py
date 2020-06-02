@@ -1,5 +1,6 @@
 """ Переменные и методы сайта opencart """
 
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from pages.base_page import BasePage
@@ -12,6 +13,7 @@ class CommonItems(BasePage):
         super().__init__(logger, browser)
 
     base_url = "http://localhost:8080/opencart/"
+    test_case_url = "https://testrail.net/index.php?/cases/view/"
 
     choose_currency = (By.CSS_SELECTOR, "#form-currency")
     choose_currency_euros = (By.CSS_SELECTOR, "[name='EUR']")

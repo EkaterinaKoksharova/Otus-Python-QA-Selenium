@@ -1,13 +1,17 @@
 """ Тесты для страницы администратора магазина opencart """
 
+import allure
 from pages.page_container import PageContainer
 
 
 class TestAdminPage:
     """ Тесты для страницы администратора магазина opencart """
 
+    page = PageContainer(browser=None)
     admin_wrong_pasword = "blabla"
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title("Проверка наличия основных элементов на странице логина администратора")
     def test_admin_login_page_find_elements(self, browser):
         """ Проверка наличия основных элементов на странице логина администратора"""
 
@@ -22,6 +26,8 @@ class TestAdminPage:
 
         assert "ERROR" not in str(browser.get_log("browser"))
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title("Проверка успешного входа в аккаунт администратора")
     def test_login_to_admin_account_right(self, browser):
         """ Проверка успешного входа в аккаунт администратора"""
 
@@ -33,6 +39,8 @@ class TestAdminPage:
         assert browser.find_element(*page.admin.logout_button).is_displayed()
         assert "ERROR" not in str(browser.get_log("browser"))
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title("Проверка НЕуспешного входа в аккаунт администратора (неверный пароль)")
     def test_login_to_admin_account_wrong(self, browser, wait):
         """ Проверка НЕуспешного входа в аккаунт администратора (неверный пароль)"""
 
@@ -44,6 +52,8 @@ class TestAdminPage:
         assert len(page.common.wait_element_present(wait, page.admin.alert_danger)) > 0
         assert "ERROR" not in str(browser.get_log("browser"))
 
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title("Проверка успешного выхода из аккаунта администратора")
     def test_logout_from_admin_account(self, browser, wait):
         """ Проверка успешного выхода из аккаунта администратора"""
 
