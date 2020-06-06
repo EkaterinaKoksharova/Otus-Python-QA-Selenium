@@ -3,6 +3,7 @@
 import allure
 import pytest
 from pages.page_container import PageContainer
+from db_connector import DBconnector
 
 
 class TestAdminProductsPage:
@@ -63,7 +64,7 @@ class TestAdminProductsPage:
         assert "ERROR" not in str(browser.get_log("browser"))
 
     @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
-    @allure.title(" Проверка копирования продукта ")
+    @allure.title(" Проверка добавления продукта БЕЗ загрузки фото ")
     def test_add_new_product_without_photo_load(self, browser, wait):
         """ Проверка добавления продукта БЕЗ загрузки фото"""
 
