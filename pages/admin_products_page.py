@@ -40,12 +40,12 @@ class AdminProductsPage(BasePage):
 
     filter_button = (By.CSS_SELECTOR, "#button-filter")
     filter_name_input = (By.CSS_SELECTOR, "#input-name")
-    filter_model_input = (By.CSS_SELECTOR, "#input-model")
-    filter_price_button = (By.CSS_SELECTOR, "#input-price")
-    filter_quantity_input = (By.CSS_SELECTOR, "#input-quantity")
-    filter_status_input = (By.CSS_SELECTOR, "#input-status")
-    filter_status_enabled = (By.CSS_SELECTOR, "#input-status [value='1']")
-    filter_status_disabled = (By.CSS_SELECTOR, "#input-status [value='0']")
+    filter_model_input = (By.CSS_SELECTOR, "#input.log-model")
+    filter_price_button = (By.CSS_SELECTOR, "#input.log-price")
+    filter_quantity_input = (By.CSS_SELECTOR, "#input.log-quantity")
+    filter_status_input = (By.CSS_SELECTOR, "#input.log-status")
+    filter_status_enabled = (By.CSS_SELECTOR, "#input.log-status [value='1']")
+    filter_status_disabled = (By.CSS_SELECTOR, "#input.log-status [value='0']")
 
     select_all_products_checkbox = (By.CSS_SELECTOR, ".table thead [type='checkbox']")
     sort_by_name = (By.CSS_SELECTOR, "thead tr :nth-child(3)")
@@ -124,8 +124,8 @@ class AdminProductsPage(BasePage):
             self.browser.find_element(*self.filter_name_input).clear()
             self.browser.find_element(*self.filter_button).click()
 
-    def create_new_product(self, photo_name, product_name, meta_tag_name, model_name):
-        """ Создание нового продукта """
+    def create_new_product_with_photo_load(self, photo_name, product_name, meta_tag_name, model_name):
+        """ Создание нового продукта с загрузкой фото"""
 
         with allure.step("Создание нового продукта"):
             self.open_product_form_for_add()
@@ -144,13 +144,32 @@ class AdminProductsPage(BasePage):
 
             #Показ формы загрузки фото на странице, ввод наименования файла фото
             self.browser.execute_script("$('#form-upload').show();")
-            self.browser.execute_script("$('#form-upload > input').show();")
+            self.browser.execute_script("$('#form-upload > input.log').show();")
 
-            self.browser.find_element_by_css_selector("#form-upload > input").send_keys(photo_name)
+            self.browser.find_element_by_css_selector("#form-upload > input.log").send_keys(photo_name)
 
             self.common_items.accept_alert()
 
             self.browser.find_element(*self.product_form_image_refresh).click()
             self.browser.find_element_by_css_selector("[title='test_product_p hoto.jpg']").click()
+
+            self.save_product_form()
+
+    def create_new_product_without_photo_load(self, product_name, meta_tag_name, model_name):
+        """ Создание нового продукта БЕЗ загрузки фото """
+
+        with allure.step("Создание нового продукта БЕЗ загрузки фото"):
+            self.open_product_form_for_add()
+            self.browser.find_element(*self.product_form_general_name).send_keys(product_name)
+            self.browser.find_element(*self.product_form_general_metatag).send_keys(meta_tag_name)
+            self.browser.find_element(*self.product_form_data).click()
+            self.browser.find_element(*self.product_form_data_model).send_keys(model_name)
+
+            self.browser.find_element(*self.product_form_image).click()
+            self.browser.find_element(*self.product_form_image_add_image).click()
+
+            self.browser.find_element(*self.product_form_image_select_image).click()
+
+            self.browser.find_element_by_css_selector("[title='cart.png']").click()
 
             self.save_product_form()

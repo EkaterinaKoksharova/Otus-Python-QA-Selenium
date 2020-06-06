@@ -35,8 +35,8 @@ class SearchResultPage(BasePage):
     view_result_as_list = (By.CSS_SELECTOR, "#list-view")
     view_result_as_grid = (By.CSS_SELECTOR, "#grid-view")
     product_compare_link = (By.CSS_SELECTOR, "#compare-total")
-    sort_list = (By.CSS_SELECTOR, "#input-sort")
-    set_items_quantity = (By.CSS_SELECTOR, "#input-limit")
+    sort_list = (By.CSS_SELECTOR, "#input.log-sort")
+    set_items_quantity = (By.CSS_SELECTOR, "#input.log-limit")
     product_card = (By.CSS_SELECTOR, ".product-grid")
 
     def go_to_search_result_page(self):

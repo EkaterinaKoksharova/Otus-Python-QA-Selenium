@@ -21,7 +21,7 @@ def pytest_addoption(parser):
                      default=10,
                      help="This is time parameter for driver wait")
     parser.addoption("--implicitly_wait",
-                     default=0,
+                     default=1,
                      help="This is time parameter for driver implicitly wait")
     parser.addoption("--log_file",
                      default=None,

@@ -1,6 +1,7 @@
 """ Локаторы и методы страницы логина администратора сайта opencart """
 
 import allure
+import time
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
@@ -11,7 +12,7 @@ class AdminPage(BasePage):
     def __init__(self, logger, browser):
         super().__init__(logger, browser)
 
-    admin_login_url = "http://localhost:8080/opencart/admin/"
+    admin_login_url = "http://localhost:8888/opencart/admin/"
 
     login = "admin"
     password = "admin"
