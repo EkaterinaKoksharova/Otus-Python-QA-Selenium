@@ -204,6 +204,7 @@ class TestAdminProductsPage:
 
         page.admin_products.open_product_form_for_edit()
         page.admin_products.edit_product_name(self.product_name_test)
+        page.admin_products.edit_product_name(self.product_name)
 
         assert len(page.common.wait_element_present(wait, page.admin_products.product_form)) > 0
         assert "ERROR" not in str(browser.get_log("browser"))
