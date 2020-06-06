@@ -101,6 +101,14 @@ class AdminProductsPage(BasePage):
         with allure.step("Открытие формы редактирования продукта"):
             self.browser.find_element(*self.edit_product_button).click()
 
+    def edit_product_name(self, product_name):
+        """ Метод редактирования наименования продукта
+                на странице products администраторской части opencart """
+
+        self.browser.find_element(*self.product_form_general_name).clear()
+        self.browser.find_element(*self.product_form_general_name).send_keys(product_name)
+        self.save_product_form()
+
     def save_product_form(self):
         """ Метод сохранения изменений в форме продукта
                 на странице products администраторской части opencart """

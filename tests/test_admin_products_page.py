@@ -2,7 +2,6 @@
 
 import allure
 import pytest
-import time
 from pages.page_container import PageContainer
 
 
@@ -11,6 +10,7 @@ class TestAdminProductsPage:
 
     page = PageContainer(browser=None)
     product_name = 'Apple Cinema 30"'
+    product_name_test = 'Apple Cinema 30" TEST'
     product_metatag = 'testtag'
     product_model = 'testmodel'
 
@@ -25,9 +25,7 @@ class TestAdminProductsPage:
         page.admin.go_to_admin_login_page()
 
         page.admin.login_to_admin()
-        time.sleep(2)
         page.common.close_security_alert()
-        time.sleep(2)
         page.admin_products.go_to_products_page(wait)
 
         assert browser.find_element(*page.admin_products.add_button).is_displayed()
@@ -55,10 +53,11 @@ class TestAdminProductsPage:
         page.common.close_security_alert()
         page.admin_products.go_to_products_page(wait)
 
-        page.admin_products.create_new_product_with_photo_load(page.admin_products.product_photo_file_name,
-                                                               page.admin_products.product_form_general_name,
-                                                               page.admin_products.product_form_general_metatag,
-                                                               page.admin_products.product_form_data_model)
+        page.admin_products.create_new_product_with_photo_load\
+            (page.admin_products.product_photo_file_name,
+             self.product_name,
+             self.product_metatag,
+             self.product_model)
 
         assert len(page.common.wait_element_present(wait, page.admin_products.success_alert)) == 1
         assert "ERROR" not in str(browser.get_log("browser"))
@@ -77,10 +76,9 @@ class TestAdminProductsPage:
         page.common.close_security_alert()
         page.admin_products.go_to_products_page(wait)
 
-        page.admin_products.create_new_product_without_photo_load\
-            (page.admin_products.product_form_general_name,
-             page.admin_products.product_form_general_metatag,
-             page.admin_products.product_form_data_model)
+        page.admin_products.create_new_product_without_photo_load(self.product_name,
+                                                                  self.product_metatag,
+                                                                  self.product_model)
 
         assert len(page.common.wait_element_present(wait, page.admin_products.success_alert)) == 1
         assert "ERROR" not in str(browser.get_log("browser"))
@@ -186,6 +184,26 @@ class TestAdminProductsPage:
         page.admin_products.go_to_products_page(wait)
 
         page.admin_products.open_product_form_for_edit()
+
+        assert len(page.common.wait_element_present(wait, page.admin_products.product_form)) > 0
+        assert "ERROR" not in str(browser.get_log("browser"))
+
+    @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
+    @allure.title(" Проверка редактирования наименования продукта ")
+    def test_edit_product_name(self, browser, wait):
+        """ Проверка редактирования наименования продукта """
+
+        page = PageContainer(browser)
+        page.tests_logger.info('test_edit_product_name')
+
+        page.admin.go_to_admin_login_page()
+
+        page.admin.login_to_admin()
+        page.common.close_security_alert()
+        page.admin_products.go_to_products_page(wait)
+
+        page.admin_products.open_product_form_for_edit()
+        page.admin_products.edit_product_name(self.product_name_test)
 
         assert len(page.common.wait_element_present(wait, page.admin_products.product_form)) > 0
         assert "ERROR" not in str(browser.get_log("browser"))
