@@ -2,16 +2,19 @@
 
 import allure
 import pytest
+import time
 from pages.page_container import PageContainer
 from db_connector import DBconnector
+
+DB = DBconnector()
 
 
 class TestAdminProductsPage:
     """ Тесты для страницы Products администратора магазина opencart """
 
     page = PageContainer(browser=None)
-    product_name = 'Apple Cinema 30"'
-    product_name_test = 'Apple Cinema 30" TEST'
+    product_name = 'HP LP3065'
+    product_name_test = 'A TEST'
     product_metatag = 'testtag'
     product_model = 'testmodel'
 
@@ -77,12 +80,17 @@ class TestAdminProductsPage:
         page.common.close_security_alert()
         page.admin_products.go_to_products_page(wait)
 
-        page.admin_products.create_new_product_without_photo_load(self.product_name,
+        page.admin_products.create_new_product_without_photo_load(self.product_name_test,
                                                                   self.product_metatag,
                                                                   self.product_model)
 
         assert len(page.common.wait_element_present(wait, page.admin_products.success_alert)) == 1
         assert "ERROR" not in str(browser.get_log("browser"))
+
+        assert DB.get_product_information(self.product_name_test)
+        page.admin_products.delete_product()
+        page.common.accept_alert()
+        page.common.wait_element_present(wait, page.admin_products.success_alert)
 
     @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
     @allure.title(" Проверка копирования продукта ")
@@ -109,7 +117,7 @@ class TestAdminProductsPage:
 
     @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
     @allure.title(" Проверка отмены удаления продукта ")
-    def test_delete_product_dismiss(self, browser, wait):
+    def tes_delete_product_dismiss(self, browser, wait):
         """ Проверка отмены удаления продукта """
 
         page = PageContainer(browser)
@@ -142,10 +150,16 @@ class TestAdminProductsPage:
         page.common.close_security_alert()
         page.admin_products.go_to_products_page(wait)
 
+        products_quantity = DB.count_products()
+
         page.admin_products.delete_product()
         page.common.accept_alert()
 
         page.common.wait_element_present(wait, page.admin_products.success_alert)
+
+        new_products_quantity = DB.count_products()
+
+        assert new_products_quantity == products_quantity - 1
 
         assert browser.find_element(
             *page.admin_products.product_line_name).text == self.product_name
@@ -205,6 +219,11 @@ class TestAdminProductsPage:
 
         page.admin_products.open_product_form_for_edit()
         page.admin_products.edit_product_name(self.product_name_test)
+
+        assert DB.get_product_information(self.product_name_test)
+
+        page.admin_products.go_to_products_page(wait)
+        page.admin_products.open_product_form_for_edit()
         page.admin_products.edit_product_name(self.product_name)
 
         assert len(page.common.wait_element_present(wait, page.admin_products.product_form)) > 0
