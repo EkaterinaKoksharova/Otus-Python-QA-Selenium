@@ -21,7 +21,7 @@ class AdminProductsPage(BasePage):
 
     copy_button = (By.CSS_SELECTOR, ".fa-copy")
     add_button = (By.CSS_SELECTOR, ".fa-plus")
-    delete_button = (By.CSS_SELECTOR, ".fa-trash-o")
+    delete_button = (By.CSS_SELECTOR, "[data-original-title='Delete']")
 
     product_form = (By.CSS_SELECTOR, "#form-product")
     product_form_save = (By.CSS_SELECTOR, "[data-original-title='Save']")
