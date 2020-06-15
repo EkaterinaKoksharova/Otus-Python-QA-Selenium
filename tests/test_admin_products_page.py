@@ -116,7 +116,7 @@ class TestAdminProductsPage:
 
     @allure.testcase(page.common.test_case_url + 'test_case_id', 'Наименование тест-кейса')
     @allure.title(" Проверка отмены удаления продукта ")
-    def tes_delete_product_dismiss(self, browser, wait):
+    def test_delete_product_dismiss(self, browser, wait):
         """ Проверка отмены удаления продукта """
 
         page = PageContainer(browser)
