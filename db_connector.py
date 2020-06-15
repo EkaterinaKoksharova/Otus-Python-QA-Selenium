@@ -36,19 +36,13 @@ class DBconnector:
 
         try:
             self.db_connection()
-            self.cursor.execute("SELECT * FROM oc_product_description WHERE name=" + "'" + product_name + "'")
+            self.cursor.execute("SELECT * FROM oc_product_description WHERE name="
+                                + "'" + product_name + "'")
             result = self.cursor.fetchall()
             self.cursor.close()
             self.connection.close()
-            print (result)
+            print(result)
             return result
 
         except mysql.connector.Error as error:
             print(format(error))
-
-
-d = DBconnector()
-
-d.count_products()
-d.count_products()
-

@@ -2,7 +2,6 @@
 
 import allure
 import pytest
-import time
 from pages.page_container import PageContainer
 from db_connector import DBconnector
 
