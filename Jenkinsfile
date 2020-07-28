@@ -10,9 +10,9 @@ pipeline {
         stage ('Building opencart_test_image') {
             steps {sh 'docker build -t opencart_test_image .'}
         }
-        stage ('Removing opencart_test_container') {
-            steps {sh 'docker rm opencart_test_container'}
-        }
+//         stage ('Removing opencart_test_container') {
+//             steps {sh 'docker rm opencart_test_container'}
+//         }
         stage ('Creating opencart_test_container') {
             steps {sh 'docker create --name opencart_test_container -v /logs/allure-log:/logs/allure-results opencart_test_image'}
         }
