@@ -12,7 +12,7 @@ class CommonItems(BasePage):
     def __init__(self, logger, browser):
         super().__init__(logger, browser)
 
-    base_url = "http://localhost:8888/opencart/"
+    base_url = "http://10.0.1.4:8888/opencart/"
     test_case_url = "https://testrail.net/index.php?/cases/view/"
 
     choose_currency = (By.CSS_SELECTOR, "#form-currency")
