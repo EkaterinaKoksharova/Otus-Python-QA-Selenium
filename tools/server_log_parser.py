@@ -26,17 +26,18 @@ def get_logfile_path():
 
         if path_from_input == '':
             path = ACCESS_LOG
+            return path
 
         if path_from_input.endswith('.log'):
-            path = path_from_input
+            return path
         else:
             files_list = os.listdir(path_from_input)
             for file in files_list:
                 if file.endswith('.log'):
                     path = path_from_input + "/" + file
+                    return path
                 else:
                     path = None
-    return path
 
 
 def collect_request_types(filepath):
