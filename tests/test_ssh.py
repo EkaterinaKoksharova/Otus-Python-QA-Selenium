@@ -3,7 +3,6 @@
 from tools.ssh_client import PASSWORD, open_ssh_connection, close_ssh_connection, client
 
 
-
 def test_restart_service():
     """ Проверка перезапуска и доступности сервиса"""
 

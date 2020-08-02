@@ -133,3 +133,4 @@ geckodriver.log
 .pytest_cache
 .idea
 v
+allure-report

@@ -12,7 +12,7 @@ class AdminPage(BasePage):
     def __init__(self, logger, browser):
         super().__init__(logger, browser)
 
-    admin_login_url = "http://10.0.1.4:8888/opencart/admin/"
+    admin_login_url = "http://localhost:8888/opencart/admin/"
 
     login = "admin"
     password = "admin"

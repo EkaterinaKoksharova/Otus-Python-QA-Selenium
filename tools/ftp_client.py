@@ -1,19 +1,23 @@
 """ Методы FTP подключения к удаленному серверу с opencart """
 
 from paramiko import Transport, SFTPClient
-from tools.ssh_client import HOST, PORT, PASSWORD, USERNAME
 
 
 class FtpClient:
     """ Методы FTP подключения к удаленному серверу с opencart """
+
+    HOST = '10.0.1.32'
+    USERNAME = 'ekaterina'
+    PASSWORD = 'merterbok'
+    PORT = 22
 
     remote_path = '/var/log/apache2/'
     remote_file = '/var/log/apache2/access.log.1'
     local_path = 'logs/access.log'
 
     def __init__(self):
-        self.transport = Transport(sock=(HOST, PORT))
-        self.transport.connect(username=USERNAME, password=PASSWORD)
+        self.transport = Transport(sock=(self.HOST, self.PORT))
+        self.transport.connect(username=self.USERNAME, password=self.PASSWORD)
         self.ftp_connection = SFTPClient.from_transport(self.transport)
 
     def open_ftp_connection(self):
