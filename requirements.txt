@@ -31,3 +31,4 @@ pytest-xdist==1.34.0
 allure-pytest==2.8.17
 mysql-connector==2.2.9
 mysql==0.0.2
+paramiko~=2.7.1
