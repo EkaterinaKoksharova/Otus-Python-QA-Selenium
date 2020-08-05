@@ -1,7 +1,15 @@
 """ Setup скрипт для сборки setuptools """
 
+import os
+import setuptools
 from setuptools.dist import Distribution
 from setuptools import setup, find_packages
+
+with open('requirements.txt') as requirements:
+    required = requirements.read().splitlines()
+
+with open('README.md', "r") as readme:
+    long_description = readme.read()
 
 
 class BinaryDistribution(Distribution):
@@ -10,9 +18,9 @@ class BinaryDistribution(Distribution):
         return False
 
 
-setup(
+setuptools.setup(
     name='opencart_tests',
-    version='0.3',
+    version='0.6',
     url='https://github.com/EkaterinaKoksharova/Otus-Python-QA-Selenium',
     license='MIT',
     author='Koksharova Ekaterina',
@@ -21,14 +29,12 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     distclass=BinaryDistribution,
-    package_data={
-        "": ["*.txt", "*.rst"],
-        "hello": ["*.msg"]
-    },
     long_description=open('README.md').read(),
     setup_requires=['pytest', 'selenium'],
     zip_safe=True,
+    python_requires='>=3.6',
     classifiers=[
-        "License :: OSI Approved :: Python Software Foundation License"
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License"
     ]
 )
