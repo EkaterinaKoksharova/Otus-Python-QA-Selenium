@@ -32,3 +32,8 @@ allure-pytest==2.8.17
 mysql-connector==2.2.9
 mysql==0.0.2
 paramiko~=2.7.1
+robot==20071211
+robotframework==3.2.1
+robotframework-requests==0.7.0
+robotframework-selenium2library==3.0.0
+# robotframework-seleniumlibrary==4.5.0
