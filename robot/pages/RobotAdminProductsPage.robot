@@ -7,26 +7,65 @@ Resource    RobotAdminPage.robot
 
 
 *** Variables ***
-${ADMIN_LOGIN_URL}          http://localhost:8888/opencart/admin/
-${PRODUCTS}                 xpath=*//a[text()='Products']
-${LOGOUT_BUTTUN}            xpath=//*[@id="header"]/div/ul/li[2]/a/span
-${ADD_NEW_BUTTON}           xpath=//*[@id="content"]/div[1]/div/div/a/i
-${PRODUCT_NAME_FIELD}       xpath=//*[@id="input-name1"]
-${META_TAG_TITLE_FIELD}     xpath=//*[@id="input-meta-title1"]
-${NAVIGATION_DATA}          xpath=//*[@id="form-product"]/ul/li[2]/a
-${MODEL_FIELD}              xpath=//*[@id="input-model"]
-${SAVE_BUTTON}              xpath=//*[@id="content"]/div[1]/div/div/button
-${NEW_PRODUCT}              iPhone 11 Pro Max 64 GB
-${NEW_TAG}                  iOS 13
-${NEW_MODEL}                A2215
-${PRODUCT_TO_DELETE}        xpath=//*[@id="form-product"]/div/table/tbody/tr[1]/td[1]/input
-${DELETE_BUTTON}            xpath=//*[@id="content"]/div[1]/div/div/button[3]
+${TEST_PRODUCT_NAME}            iPhone 11 Pro Max 64 GB
+${TEST_PRODUCT_TAG}             iOS 13
+${TEST_PRODUCT_MODEL}           A2215
+
+${ADD_BUTTON}                   css:.fa-plus
+${DELETE_BUTTON}                css:[data-original-title='Delete']
+${COPY_BUTTON}                  css:.fa-copy
+${SAVE_BUTTON}                  css:[data-original-title='Save']
+
+${PRODUCT_NAME_INPUT}           id:input-name1
+${PRODUCT_META_TAG_INPUT}       id:input-meta-title1
+${PRODUCT_DATA}                 link:Data
+${PRODUCT_MODEL_INPUT}          id:input-model
+
+${FILTER_PRODUCT_NAME_INPUT}    id:input-name
+${FILTER_PRODUCTS_BUTTON}       id:button-filter
+
+${1ST_PRODUCT_CHECKBOX}         css:tbody tr:nth-child(1) [type='checkbox']
+
+
+#    product_lines = (By.CSS_SELECTOR, "tbody tr")
+#    product_line_name = (By.CSS_SELECTOR, "tbody tr td:nth-child(3)")
+#    select_product_checkbox = (By.CSS_SELECTOR, "tbody tr:nth-child(1) [type='checkbox']")
+#    edit_product_button = (By.CSS_SELECTOR, "tbody tr:nth-child(1) .btn")
+#
+#    error_text = (By.CLASS_NAME, 'text-danger')
 
 
 *** Keywords ***
 
 Перейти на страницу products admin
     Wait Until Element Is Visible      ${MENU_CATALOG}
-    Click button    ${MENU_CATALOG}
+    Click element       ${MENU_CATALOG}
     Wait Until Element Is Visible      ${MENU_PRODUCTS}
-    Click button    ${MENU_PRODUCTS}
+    Click element       ${MENU_PRODUCTS}
+
+Добавить новый продукт
+    [Arguments]         ${product_name}     ${meta_tag}     ${model}
+    Click Element       ${ADD_BUTTON}
+    Input text          ${PRODUCT_NAME_INPUT}    ${product_name}
+    Input text          ${PRODUCT_META_TAG_INPUT}    ${meta_tag}
+    Click Element       ${PRODUCT_DATA}
+    Input text          ${PRODUCT_MODEL_INPUT}    ${model}
+    Click Button        ${SAVE_BUTTON}
+
+Открыть форму добавления продукта
+    Click Element       ${ADD_BUTTON}
+
+Ввести наименование продукта:
+    [Arguments]         ${product_name}
+    Input text          ${PRODUCT_NAME_INPUT}    ${product_name}
+
+Сохранить изменения продукта
+    Click Button        ${SAVE_BUTTON}
+
+Удалить продукт
+    [Arguments]         ${product_name}
+    Input text          ${FILTER_PRODUCT_NAME_INPUT}     ${product_name}
+    Click element       ${FILTER_PRODUCTS_BUTTON}
+    Click element       ${1ST_PRODUCT_CHECKBOX}
+    Click element       ${DELETE_BUTTON}
+    Handle alert
