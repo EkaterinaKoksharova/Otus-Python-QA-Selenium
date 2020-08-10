@@ -36,4 +36,4 @@ robot==20071211
 robotframework==3.2.1
 robotframework-requests==0.7.0
 robotframework-selenium2library==3.0.0
-# robotframework-seleniumlibrary==4.5.0
+robotframework-seleniumlibrary==4.5.0

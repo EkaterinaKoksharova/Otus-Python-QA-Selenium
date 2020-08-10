@@ -17,7 +17,7 @@ class AdminProductsPage(BasePage):
 
     product_photo_file_name = os.path.join(os.path.dirname(__file__),
                                            '/Users/zsergey/PycharmProjects/Otus-Python-QA-Selenium/'
-                                           'pages/data/test_product_photo.jpg')
+                                           'libraries/data/test_product_photo.jpg')
 
     copy_button = (By.CSS_SELECTOR, ".fa-copy")
     add_button = (By.CSS_SELECTOR, ".fa-plus")
