@@ -1,12 +1,15 @@
 *** Settings ***
 Documentation    Suite description
 Library          Selenium2Library
+Library           DatabaseLibrary
 
 Resource        ../pages/RobotCommon.robot
 Resource        ../pages/RobotAdminPage.robot
 Resource        ../pages/RobotAdminProductsPage.robot
 Resource        ../pages/RobotDBConnector.robot
 
+Suite Setup     Подключиться к базе
+Suite Teardown  Отключиться от базы
 Test Teardown   Close browser
 
 *** Variables ***
@@ -50,9 +53,10 @@ ${ACTUAL_PRODUCT_COUNT}
     Кликнуть на кнопку авторизации
     Закрыть предупреждающее окно
     Перейти на страницу products admin
-    Посчитать количество продуктов как:    ${PREVIOUS_PRODUCT_COUNT}
+    ${PREVIOUS_PRODUCT_COUNT}   row count   SELECT * FROM oc_product
+
     Удалить продукт                 ${TEST_PRODUCT_NAME}
 
     Подождать появления элемента:   ${ALERT_SUCCESS}
-    Посчитать количество продуктов как:    ${ACTUAL_PRODUCT_COUNT}
+    ${ACTUAL_PRODUCT_COUNT}   row count   SELECT * FROM oc_product
     Проверить, что количество продуктов изменилось:     ${PREVIOUS_PRODUCT_COUNT}   ${ACTUAL_PRODUCT_COUNT}
