@@ -14,7 +14,7 @@ class LoginAdminLibrary:
 
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
 
-    a_browser = webdriver.Chrome()
+    browser = webdriver.Chrome()
 
     admin_login_url = "http://localhost:8888/opencart/admin/"
 
@@ -29,34 +29,34 @@ class LoginAdminLibrary:
 
     close_security_alert_button = (By.CSS_SELECTOR, ".close")
 
-    # @keyword("Перейти на страницу авторизации admin")
+    @keyword("Перейти на страницу авторизации admin")
     def go_to_admin_login_page(self):
         """ Метод перехода на страницу admin login администраторской части opencart """
 
         self.browser.get(self.admin_login_url)
 
-    # @keyword("Ввести логин и пароль")
+    @keyword("Ввести логин и пароль admin")
     def enter_admin_login_and_password(self, login=login, password=password):
         """ Ввод логина и пароля в админской части магазина opencart """
 
         self.browser.find_element(*self.name_input).send_keys(login)
         self.browser.find_element(*self.password_input).send_keys(password)
 
-    # @keyword("Кликнуть на кнопку авторизации")
+    @keyword("Кликнуть на кнопку авторизации admin")
     def click_admin_login_button(self):
         """ Авторизация в админской части магазина opencart """
 
-        self.browser.find_element(*self.submit_button).click()
+        self.browser.find_element(*self.admin_login_button).click()
 
-    # @keyword("Закрыть предупреждающее окно")
+    @keyword("Закрыть предупреждающее окно")
     def close_security_alert(self):
         """ Закрытие предупреждающего окна при загрузке страницы """
 
         self.browser.find_element(*self.close_security_alert_button).click()
 
-    # @keyword("Дождаться присутствия элемента:")
-    def wait_admin_element_present(self, locator):
+    @keyword("Дождаться присутствия кнопки admin logout")
+    def wait_admin_element_present(self):
         """ Метод ожидания появления элемента """
 
         wait = WebDriverWait(self.browser, 10)
-        wait.until(ec.presence_of_all_elements_located(locator))
+        wait.until(ec.presence_of_all_elements_located(self.admin_logout_button))
