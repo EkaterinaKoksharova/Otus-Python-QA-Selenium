@@ -26,15 +26,6 @@ ${FILTER_PRODUCTS_BUTTON}       id:button-filter
 
 ${1ST_PRODUCT_CHECKBOX}         css:tbody tr:nth-child(1) [type='checkbox']
 
-
-#    product_lines = (By.CSS_SELECTOR, "tbody tr")
-#    product_line_name = (By.CSS_SELECTOR, "tbody tr td:nth-child(3)")
-#    select_product_checkbox = (By.CSS_SELECTOR, "tbody tr:nth-child(1) [type='checkbox']")
-#    edit_product_button = (By.CSS_SELECTOR, "tbody tr:nth-child(1) .btn")
-#
-#    error_text = (By.CLASS_NAME, 'text-danger')
-
-
 *** Keywords ***
 
 Перейти на страницу products admin
