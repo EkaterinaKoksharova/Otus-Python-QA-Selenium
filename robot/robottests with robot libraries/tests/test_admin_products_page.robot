@@ -5,8 +5,13 @@ Library          Selenium2Library
 Resource        ../pages/RobotCommon.robot
 Resource        ../pages/RobotAdminPage.robot
 Resource        ../pages/RobotAdminProductsPage.robot
+Resource        ../pages/RobotDBConnector.robot
 
 Test Teardown   Close browser
+
+*** Variables ***
+${PREVIOUS_PRODUCT_COUNT}
+${ACTUAL_PRODUCT_COUNT}
 
 
 *** Test Cases ***
@@ -35,6 +40,8 @@ Test Teardown   Close browser
     Добавить новый продукт          ${TEST_PRODUCT_NAME}    ${TEST_PRODUCT_TAG}     ${TEST_PRODUCT_MODEL}
 
     Подождать появления элемента:   ${ALERT_SUCCESS}
+    Получить инфо из БД о добавленном продукте:     ${TEST_PRODUCT_NAME}
+
 
 Удаление продукта:
 
@@ -43,6 +50,9 @@ Test Teardown   Close browser
     Кликнуть на кнопку авторизации
     Закрыть предупреждающее окно
     Перейти на страницу products admin
+    Посчитать количество продуктов как:    ${PREVIOUS_PRODUCT_COUNT}
     Удалить продукт                 ${TEST_PRODUCT_NAME}
 
     Подождать появления элемента:   ${ALERT_SUCCESS}
+    Посчитать количество продуктов как:    ${ACTUAL_PRODUCT_COUNT}
+    Проверить, что количество продуктов изменилось:     ${PREVIOUS_PRODUCT_COUNT}   ${ACTUAL_PRODUCT_COUNT}
